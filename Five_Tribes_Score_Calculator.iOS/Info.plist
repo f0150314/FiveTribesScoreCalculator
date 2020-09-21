@@ -29,7 +29,7 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>CustomLaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>Five_Tribes_Score_Calculator</string>
 	<key>XSAppIconAssets</key>
