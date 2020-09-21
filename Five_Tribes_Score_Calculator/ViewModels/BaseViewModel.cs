@@ -11,7 +11,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         {
         }
 
-        private void OnPropertyChanged(string propertyName = null)
+        public void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
