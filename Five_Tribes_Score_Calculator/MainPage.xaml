@@ -8,13 +8,17 @@
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="15" />
+            </Style>
+            <Style TargetType="Frame">
+                <Setter Property="Padding" Value="5"></Setter>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout BackgroundColor="Black">
             <Image Source="{local:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Header.jpg}"
-                   VerticalOptions="FillAndExpand"/>  
+                   VerticalOptions="FillAndExpand" />  
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5"></ColumnDefinition>
@@ -25,36 +29,39 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="240"></RowDefinition>
-                    <RowDefinition Height="5"></RowDefinition>
+                    <RowDefinition Height="1"></RowDefinition>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="70"></RowDefinition>
                     <RowDefinition Height="70"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Image Source="{local:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Image.jpg}"
+                <ImageButton Source="{local:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Image.jpg}"
                        Grid.Column="1"
                        Grid.Row="0"
                        Aspect="Fill" />
-                <Label Grid.Column="1"
-                       Grid.Row="2"
-                       Text="Five Tribes Base Game" />
+                <Frame Grid.Column="1"
+                       Grid.Row="2" >
+                    <Label Text="Five Tribes Base Game" />
+                </Frame>
 
-                <Image Source="{local:ImageResource Five_Tribes_Score_Calculator.Resources.AQ_Image.jpg}"
+                <ImageButton Source="{local:ImageResource Five_Tribes_Score_Calculator.Resources.AQ_Image.jpg}"
                        Grid.Column="2"
                        Grid.Row="0"
                        Aspect="Fill" />
-                <Label Grid.Column="2"
-                       Grid.Row="2"
-                       Text="The Artisans Of Naqala" />
+                <Frame Grid.Column="2"
+                       Grid.Row="2">
+                    <Label Text="The Artisans Of Naqala" />
+                </Frame>              
 
-                <Image Source="{local:ImageResource Five_Tribes_Score_Calculator.Resources.WS_Image.jpg}"
+                <ImageButton Source="{local:ImageResource Five_Tribes_Score_Calculator.Resources.WS_Image.jpg}"
                        Grid.Column="3"
                        Grid.Row="0"
                        Aspect="Fill" />
-                <Label Grid.Column="3"
-                       Grid.Row="2"
-                       Text="Whims Of The Sultans" />               
+                <Frame Grid.Column="3"
+                       Grid.Row="2">
+                    <Label Text="Whims Of The Sultans" />
+                </Frame>                
 
                 <Picker Grid.Column="1"
                         Grid.ColumnSpan="3"
