@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Five_Tribes_Score_Calculator.Helpers"
-             xmlns:y="clr-namespace:Five_Tribes_Score_Calculator.ViewModels"
+             xmlns:h="clr-namespace:Five_Tribes_Score_Calculator.Helpers"
+             xmlns:v="clr-namespace:Five_Tribes_Score_Calculator.ViewModels"
+             xmlns:local="clr-namespace:Five_Tribes_Score_Calculator"
              x:Class="Five_Tribes_Score_Calculator.MainPage">
     <!--Xmal model binding-->
     <ContentPage.BindingContext>
-        <y:MainPageViewModel />
+        <v:MainPageViewModel />
     </ContentPage.BindingContext>
 
     <!--Page Styles-->
@@ -29,7 +30,7 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="Black">
             <!--Top Image-->
-            <Image Source="{local:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Header.jpg}"
+            <Image Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Header.jpg}"
                    VerticalOptions="FillAndExpand" />  
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -48,21 +49,21 @@
                 </Grid.RowDefinitions>
 
                 <!--Base Game-->
-                <ImageButton x:Name="ButtonFT" Source="{local:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Image.jpg}"
+                <ImageButton x:Name="ButtonFT" Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Image.jpg}"
                        Grid.Column="1" Grid.Row="0" Clicked="ButtonFT_Clicked" />
                 <Frame x:Name="FrameFT" Grid.Column="1" Grid.Row="1">
                     <Label Text="Five Tribes Base Game" />
                 </Frame>
 
                 <!--Artisans of Naqala-->
-                <ImageButton x:Name="ButtonAQ" Source="{local:ImageResource Five_Tribes_Score_Calculator.Resources.AQ_Image.jpg}"
+                <ImageButton x:Name="ButtonAQ" Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.AQ_Image.jpg}"
                        Grid.Column="2" Grid.Row="0" Clicked="ButtonAQ_Clicked" />
                 <Frame x:Name="FrameAQ" Grid.Column="2" Grid.Row="1">
                     <Label Text="The Artisans Of Naqala" />
                 </Frame>              
 
                 <!--Whims of Sultan-->
-                <ImageButton x:Name="ButtonWS" Source="{local:ImageResource Five_Tribes_Score_Calculator.Resources.WS_Image.jpg}"
+                <ImageButton x:Name="ButtonWS" Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.WS_Image.jpg}"
                        Grid.Column="3" Grid.Row="0" Clicked="ButtonWS_Clicked" />
                 <Frame x:Name="FrameWS" Grid.Column="3" Grid.Row="1">
                     <Label Text="Whims Of The Sultans" />
@@ -74,7 +75,7 @@
                         Grid.Row="2"
                         Margin="0,10"
                         Title="Number Of Players"
-                        TextColor="LightSteelBlue"
+                        TextColor="LightGray"
                         FontAttributes="Bold">
                     <Picker.Items>
                         <x:String></x:String>
@@ -91,8 +92,8 @@
                         Grid.Column="1"
                         Grid.Row="3"
                         Grid.ColumnSpan="3"
-                        Text="{Binding GameName, StringFormat='{0} Selected (Submit)'}"
-                        TextColor="LightSteelBlue"
+                        Text="{Binding GameName}"
+                        TextColor="DarkGray"
                         FontAttributes="Bold"
                         FontSize="Medium"
                         Clicked="Button_Clicked"/>
