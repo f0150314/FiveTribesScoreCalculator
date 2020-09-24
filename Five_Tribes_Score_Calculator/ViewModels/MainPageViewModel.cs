@@ -59,13 +59,13 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             switch (SelectedGame.GameType)
             {
                 case GameTypes.FT:
-                    GameName = "Five Tribes";
+                    GameName = "Five Tribes Base Game"
                     break;
                 case GameTypes.AQ:
-                    GameName = "Artisans Of Naqala";
+                    GameName = "The Artisans Of Naqala";
                     break;
                 case GameTypes.WS:
-                    GameName = "Whims Of Sultan";
+                    GameName = "Whims Of The Sultan";
                     MaximumPlayers = 5;
                     break;
             }

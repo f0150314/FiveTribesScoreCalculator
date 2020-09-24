@@ -52,9 +52,5 @@ namespace Five_Tribes_Score_Calculator
             FrameAQ.BorderColor = Color.Default;
             FrameWS.BorderColor = Color.White;
         }
-
-        private void Button_Clicked(System.Object sender, System.EventArgs e)
-        {
-        }
     }
 }
