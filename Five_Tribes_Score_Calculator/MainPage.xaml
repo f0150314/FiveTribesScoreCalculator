@@ -34,8 +34,8 @@
         <!--Outer Grid-->
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="40*" />
-                <RowDefinition Height="60*" />
+                <RowDefinition Height="35*" />
+                <RowDefinition Height="65*" />
             </Grid.RowDefinitions>
 
             <!--Top Image-->
@@ -87,14 +87,9 @@
                         Margin="0,0,0,10"
                         Title="Number Of Players"
                         TextColor="LightGray"
-                        FontAttributes="Bold">
-                    <Picker.Items>
-                        <x:String></x:String>
-                        <x:String>2 Players</x:String>
-                        <x:String>3 Players</x:String>
-                        <x:String>4 Players</x:String>
-                        <x:String>5 Players</x:String>
-                    </Picker.Items>
+                        FontAttributes="Bold"
+                        ItemsSource="{Binding PlayerCountList}"
+                        SelectedItem="{Binding SelectedPlayerCount}">
                 </Picker>
 
                 <!--Submit button-->

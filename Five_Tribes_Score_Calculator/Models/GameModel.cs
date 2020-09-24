@@ -5,11 +5,12 @@ namespace Five_Tribes_Score_Calculator.Models
 {
     public class GameModel
     {
-        //Properties
-        public int PlayerCount { get; set; }
-        public GameTypes? GameType { get; set; } = null; //Set to null to prevent first enum type get selected by default 
+        // Properties
+        public int PlayerCount { get; set; } = 0;
 
-        //Constructor
+        public GameTypes? GameType { get; set; } = null; // Null by default because of ENUM
+
+        // Constructor
         public GameModel()
         {
         }

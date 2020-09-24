@@ -12,19 +12,19 @@ namespace Five_Tribes_Score_Calculator
 {
     public partial class MainPage : ContentPage
     {
-        //Another way to access view model
+        // Another way to access view model
         //private MainPageViewModel VM => (MainPageViewModel)BindingContext;
 
         public MainPage()
         {
             InitializeComponent();
 
-            //Bind view model
+            // Bind view model
             BindingContext = ViewModelLocator.MainPageViewModel;
             BindCommandParameter();
         }
 
-        //Set command parameter
+        // Set command parameter
         private void BindCommandParameter()
         {
             ButtonFT.CommandParameter = GameTypes.FT;
