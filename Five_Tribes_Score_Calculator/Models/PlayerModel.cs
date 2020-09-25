@@ -3,12 +3,11 @@ namespace Five_Tribes_Score_Calculator.Models
 {
     public class PlayerModel
     {
-        public string Name { get; set; }
-        public ScoreModel Score { get; set; }
+        // Properties
         public int TotalScore { get; set; }
 
-        public PlayerModel()
-        {
-        }
+        public string Name { get; set; }
+
+        public ScoreModel Score { get; set; }
     }
 }

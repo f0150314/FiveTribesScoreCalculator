@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace Five_Tribes_Score_Calculator.Views
 {
-    public partial class ScoreSheet : ContentPage
+    public partial class PlayerConfigView : ContentPage
     {
-        public ScoreSheet()
+        public PlayerConfigView()
         {
             InitializeComponent();
         }
