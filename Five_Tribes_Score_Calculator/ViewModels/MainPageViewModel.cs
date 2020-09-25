@@ -5,19 +5,22 @@ using Five_Tribes_Score_Calculator.Helpers;
 using Five_Tribes_Score_Calculator.Models;
 using Xamarin.Forms;
 using System.Linq;
+using System.Threading.Tasks;
+using Five_Tribes_Score_Calculator.Services;
 
 namespace Five_Tribes_Score_Calculator.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
         // Properties
-        private int maximumPlayers = 0;
+        private int _maximumPlayers = 0;
+        private PlayerCountServices _playCountServices = null;
 
         public ICommand SelectGameType { get; }
 
-        public GameModel SelectedGame { get; } = new GameModel();
+        public ICommand SubmitSettings { get; }
 
-        public Dictionary<string, int> PlayerCountDic { get; private set; } = new Dictionary<string, int>();
+        public GameModel SelectedGame { get; } = new GameModel();
 
         private string _gameName = "No Game Selected";
         public string GameName
@@ -48,7 +51,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             set
             {
                 _selectedPlayerCount = value != null ? value : string.Empty;
-                SelectedGame.PlayerCount = PlayerCountDic[_selectedPlayerCount];
+                SelectedGame.PlayerCount = _playCountServices.PlayerCountDic[_selectedPlayerCount];
                 OnPropertyChanged(nameof(SelectedPlayerCount));
             }
         }
@@ -56,11 +59,15 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         //Constructor
         public MainPageViewModel()
         {
-            // Initialize command with type for parameters
+            // Initialize services
+            _playCountServices = new PlayerCountServices();
+
+            // Initialize commands
             SelectGameType = new Command<GameTypes>(OnSelectGameType);
+            SubmitSettings = new Command(OnSubmitSettings);
 
             // Initialize picker items
-            PlayerCountList = PopulatePickerItems(maximumPlayers);
+            PlayerCountList = _playCountServices.PopulatePickerItems(_maximumPlayers);
         }
 
         /// <summary>
@@ -73,7 +80,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             SelectedGame.GameType = gameType;
 
             // Set maximum players
-            maximumPlayers = 4;
+            _maximumPlayers = 4;
 
             // Set selected game name
             switch (SelectedGame.GameType)
@@ -86,44 +93,29 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                     break;
                 case GameTypes.WS:
                     GameName = "Whims Of The Sultan";
-                    maximumPlayers = 5;
+                    _maximumPlayers = 5;
                     break;
             }
 
             // Populate picker items
-            PlayerCountList = PopulatePickerItems(maximumPlayers);
+            PlayerCountList = _playCountServices.PopulatePickerItems(_maximumPlayers);
         }
 
         /// <summary>
-        /// Populate a list of play count in the picker control
+        /// Navigate to next page
         /// </summary>
-        /// <param name="maximumPlayers"></param>
-        /// <returns>A list of keys in PlayCountDic</returns>
-        private List<string> PopulatePickerItems(int maximumPlayers)
+        private void OnSubmitSettings()
         {
-            // Clear dictionary
-            PlayerCountDic.Clear();
-
-            string itemKey = string.Empty;
-
-            // Add items
-            for (int i = 0; i <= maximumPlayers; i++)
+            if (SelectedGame.GameType != null && SelectedGame.PlayerCount != 0)
             {
-                // No one player option
-                if (i == 1)
-                {
-                    continue;
-                }
-                // If player more than 1, set item key
-                else if (i != 0)
-                {
-                    itemKey = string.Format("{0} Players", i);
-                }
-
-                PlayerCountDic.Add(itemKey, i);
+                return;
             }
-
-            return PlayerCountDic.Keys.ToList();
+            else
+            {
+                return;
+            }
         }
+
+        
     }
 }

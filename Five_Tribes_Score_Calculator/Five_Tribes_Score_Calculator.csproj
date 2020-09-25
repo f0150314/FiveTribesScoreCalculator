@@ -20,6 +20,7 @@
     <Folder Include="ViewModels\" />
     <Folder Include="Resources\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\FT_Header.jpg" />

@@ -101,7 +101,8 @@
                         Text="{Binding GameName}"
                         TextColor="DarkGray"
                         FontAttributes="Bold"
-                        FontSize="Medium" />
+                        FontSize="Medium"
+                        Command="{Binding SubmitSettings}"/>
             </Grid>      
         </Grid>          
     </ContentPage.Content>   
