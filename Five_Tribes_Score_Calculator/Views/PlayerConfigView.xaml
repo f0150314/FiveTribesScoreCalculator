@@ -1,10 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Five_Tribes_Score_Calculator.Views.PlayerConfigView">
+             xmlns:h="clr-namespace:Five_Tribes_Score_Calculator.Helpers"
+             x:Class="Five_Tribes_Score_Calculator.Views.PlayerConfigView"
+             BackgroundColor="Black">
     <ContentPage.Content>
-        <StackLayout>
+        <!--Outer Grid-->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35*" />
+                <RowDefinition Height="65*" />
+            </Grid.RowDefinitions>
 
-        </StackLayout>
+            <!--Top Image-->
+            <Image Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Header2.jpg}"
+                   Aspect="Fill" Grid.Row="0" Margin="0,0,0,10"/>
+
+            <!--ListView-->
+
+            <!--Back Button-->
+            <Button Text="Back"
+                    Grid.Row="1"
+                    Command="{Binding NavigateToPreviousPage}"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

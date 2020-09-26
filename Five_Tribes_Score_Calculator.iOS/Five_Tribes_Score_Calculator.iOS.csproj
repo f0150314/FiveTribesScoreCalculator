@@ -112,6 +112,6 @@
     <InterfaceDefinition Include="Resources\CustomLaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\FT_LaunchScreenImage.jpg" />
+    <BundleResource Include="Resources\FT_LaunchScreenImage.png" />
   </ItemGroup>
 </Project>
