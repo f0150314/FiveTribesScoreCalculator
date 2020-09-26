@@ -1,4 +1,11 @@
-﻿using Five_Tribes_Score_Calculator.Helpers;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Five_Tribes_Score_Calculator.Helpers;
+using Five_Tribes_Score_Calculator.ViewModels;
 using Xamarin.Forms;
 
 namespace Five_Tribes_Score_Calculator

@@ -1,23 +1,23 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using System.Collections.Generic;
 using Five_Tribes_Score_Calculator.Helpers;
 using Five_Tribes_Score_Calculator.Models;
 using Xamarin.Forms;
+using System.Linq;
 using System.Threading.Tasks;
 using Five_Tribes_Score_Calculator.Services;
-using Five_Tribes_Score_Calculator.Views;
 
 namespace Five_Tribes_Score_Calculator.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
-        // Private fields
+        // Properties
         private int _maximumPlayers = 0;
         private PlayerCountServices _playCountServices = null;
         private DialogServices _dialogServices = null;
         private NavigationServices _navigationServices = null;
 
-        // Properties
         public ICommand SelectGameType { get; }
 
         public ICommand SubmitSettings { get; }
@@ -52,7 +52,6 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             get => _selectedPlayerCount;
             set
             {
-                // Set playCount
                 _selectedPlayerCount = value != null ? value : string.Empty;
                 SelectedGame.PlayerCount = _playCountServices.PlayerCountDic[_selectedPlayerCount];
                 OnPropertyChanged(nameof(SelectedPlayerCount));
@@ -107,13 +106,13 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         }
 
         /// <summary>
-        /// Navigate to next page or show error message if config was not set up.
+        /// Navigate to next page
         /// </summary>
         private async Task OnSubmitSettings()
         {
             if (SelectedGame.GameType != null && SelectedGame.PlayerCount != 0)
             {
-                await Application.Current.MainPage.Navigation.PushModalAsync(new PlayerConfigView());
+                return;
             }
             else
             {

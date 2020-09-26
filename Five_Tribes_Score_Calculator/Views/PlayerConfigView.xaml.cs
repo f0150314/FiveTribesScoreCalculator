@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Five_Tribes_Score_Calculator.Helpers;
+
 using Xamarin.Forms;
 
 namespace Five_Tribes_Score_Calculator.Views
@@ -10,9 +10,6 @@ namespace Five_Tribes_Score_Calculator.Views
         public PlayerConfigView()
         {
             InitializeComponent();
-
-            // Bind view model
-            BindingContext = ViewModelLocator.PlayerConfigViewModel;
         }
     }
 }

@@ -2,11 +2,23 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:h="clr-namespace:Five_Tribes_Score_Calculator.Helpers"
+             xmlns:v="clr-namespace:Five_Tribes_Score_Calculator.ViewModels"
+             xmlns:local="clr-namespace:Five_Tribes_Score_Calculator"
              x:Class="Five_Tribes_Score_Calculator.MainPage"
              BackgroundColor="Black">
+    <!--Xmal model binding-->
+    <ContentPage.BindingContext>
+        <v:MainPageViewModel />
+    </ContentPage.BindingContext>
+
     <!--Page Styles-->
     <ContentPage.Resources>
         <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="15" />
+            </Style>
             <Style TargetType="Frame" x:Key="LabelFrame">
                 <Setter Property="Padding" Value="5" />
                 <Setter Property="BackgroundColor" Value="Transparent" />
@@ -28,7 +40,7 @@
 
             <!--Top Image-->
             <Image Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Header.jpg}"
-                   Aspect="Fill" Grid.Row="0" Margin="0,0,0,10"/>
+                   VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Row="0" Margin="0,0,0,10"/>
 
             <!--Inner Grid-->
             <Grid Grid.Row="1">
@@ -74,16 +86,23 @@
                         Grid.Row="2"
                         Margin="0,0,0,10"
                         Title="Number Of Players"
+                        TextColor="LightGray"
+                        FontAttributes="Bold"
                         ItemsSource="{Binding PlayerCountList}"
                         SelectedItem="{Binding SelectedPlayerCount}">
                 </Picker>
 
                 <!--Submit button-->
-                <Button Grid.Column="1"
+                <Button x:Name="ButtonSubmit"
+                        BackgroundColor="White"
+                        Grid.Column="1"
                         Grid.Row="3"
                         Grid.ColumnSpan="3"
                         Text="{Binding GameName}"
-                        Command="{Binding SubmitSettings}" />
+                        TextColor="DarkGray"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Command="{Binding SubmitSettings}"/>
             </Grid>      
         </Grid>          
     </ContentPage.Content>   
