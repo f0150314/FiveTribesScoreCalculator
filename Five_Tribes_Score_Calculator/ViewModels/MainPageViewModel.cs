@@ -1,23 +1,19 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Collections.Generic;
 using Five_Tribes_Score_Calculator.Helpers;
 using Five_Tribes_Score_Calculator.Models;
 using Xamarin.Forms;
-using System.Linq;
 using System.Threading.Tasks;
-using Five_Tribes_Score_Calculator.Services;
 
 namespace Five_Tribes_Score_Calculator.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
-        // Properties
+        // Private fields
         private int _maximumPlayers = 0;
-        private PlayerCountServices _playCountServices = null;
-        private DialogServices _dialogServices = null;
-        private NavigationServices _navigationServices = null;
+        private PlayerCountGenerator _playerCountGenerator = new PlayerCountGenerator();
 
+        // Properties
         public ICommand SelectGameType { get; }
 
         public ICommand SubmitSettings { get; }
@@ -52,8 +48,9 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             get => _selectedPlayerCount;
             set
             {
+                // Set playCount
                 _selectedPlayerCount = value != null ? value : string.Empty;
-                SelectedGame.PlayerCount = _playCountServices.PlayerCountDic[_selectedPlayerCount];
+                SelectedGame.PlayerCount = _playerCountGenerator.PlayerCountDic[_selectedPlayerCount];
                 OnPropertyChanged(nameof(SelectedPlayerCount));
             }
         }
@@ -61,17 +58,12 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         //Constructor
         public MainPageViewModel()
         {
-            // Initialize services
-            _playCountServices = new PlayerCountServices();
-            _dialogServices = new DialogServices();
-            _navigationServices = new NavigationServices();
-
             // Initialize commands
             SelectGameType = new Command<GameTypes>(OnSelectGameType);
             SubmitSettings = new Command(async () => await OnSubmitSettings());
 
-            // Initialize picker items
-            PlayerCountList = _playCountServices.PopulatePickerItems(_maximumPlayers);
+            // Initialize picker list
+            PlayerCountList = _playerCountGenerator.PopulatePickerItems(_maximumPlayers);
         }
 
         /// <summary>
@@ -102,21 +94,21 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             }
 
             // Populate picker items
-            PlayerCountList = _playCountServices.PopulatePickerItems(_maximumPlayers);
+            PlayerCountList = _playerCountGenerator.PopulatePickerItems(_maximumPlayers);
         }
 
         /// <summary>
-        /// Navigate to next page
+        /// Navigate to next page or show error message if config was not set up.
         /// </summary>
         private async Task OnSubmitSettings()
         {
             if (SelectedGame.GameType != null && SelectedGame.PlayerCount != 0)
             {
-                return;
+                await App.NavigationServices.NavigateTo(ViewNames.PLAYER_CONFIG_PAGE);
             }
             else
             {
-                await _dialogServices.ShowError(SelectedGame);
+                await App.DialogServices.ShowError(SelectedGame);
             }
         }
     }

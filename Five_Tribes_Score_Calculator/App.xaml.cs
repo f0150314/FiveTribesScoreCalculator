@@ -1,4 +1,7 @@
 ﻿using System;
+using Five_Tribes_Score_Calculator.Helpers;
+using Five_Tribes_Score_Calculator.Services;
+using Five_Tribes_Score_Calculator.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -6,9 +9,18 @@ namespace Five_Tribes_Score_Calculator
 {
     public partial class App : Application
     {
+        // Properties
+        public static NavigationServices NavigationServices { get; } = new NavigationServices();
+        public static DialogServices DialogServices { get; } = new DialogServices();
+
         public App()
         {
             InitializeComponent();
+
+            // Register Pages
+            NavigationServices.RegisterPages(ViewNames.MAIN_PAGE, typeof(MainPage));
+            NavigationServices.RegisterPages(ViewNames.PLAYER_CONFIG_PAGE, typeof(PlayerConfigView));
+            NavigationServices.RegisterPages(ViewNames.SCORE_SHEET_PAGE, typeof(ScoreSheetView));
 
             MainPage = new MainPage();
         }
