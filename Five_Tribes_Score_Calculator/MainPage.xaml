@@ -49,21 +49,21 @@
 
                 <!--Base Game-->
                 <ImageButton x:Name="ButtonFT" Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Image.jpg}"
-                       Grid.Column="1" Grid.Row="0" Clicked="ButtonFT_Clicked" />
+                       Grid.Column="1" Grid.Row="0" Clicked="ButtonFT_Clicked" CommandParameter="{x:Static h:GameTypes.FT}" />
                 <Frame x:Name="FrameFT" Grid.Column="1" Grid.Row="1" Style="{StaticResource LabelFrame}">
                     <Label Text="Five Tribes Base Game" />
                 </Frame>
 
                 <!--Artisans of Naqala-->
                 <ImageButton x:Name="ButtonAQ" Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.AQ_Image.jpg}"
-                       Grid.Column="2" Grid.Row="0" Clicked="ButtonAQ_Clicked" />
+                       Grid.Column="2" Grid.Row="0" Clicked="ButtonAQ_Clicked" CommandParameter="{x:Static h:GameTypes.AQ}" />
                 <Frame x:Name="FrameAQ" Grid.Column="2" Grid.Row="1" Style="{StaticResource LabelFrame}">
                     <Label Text="The Artisans Of Naqala" />
                 </Frame>              
 
                 <!--Whims of Sultan-->
                 <ImageButton x:Name="ButtonWS" Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.WS_Image.jpg}"
-                       Grid.Column="3" Grid.Row="0" Clicked="ButtonWS_Clicked" />
+                       Grid.Column="3" Grid.Row="0" Clicked="ButtonWS_Clicked" CommandParameter="{x:Static h:GameTypes.WS}" />
                 <Frame x:Name="FrameWS" Grid.Column="3" Grid.Row="1" Style="{StaticResource LabelFrame}">
                     <Label Text="Whims Of The Sultan" />
                 </Frame>                

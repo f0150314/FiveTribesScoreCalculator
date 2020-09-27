@@ -113,5 +113,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\FT_LaunchScreenImage.png" />
+    <BundleResource Include="Resources\FontAwesomeSolid.otf" />
   </ItemGroup>
 </Project>

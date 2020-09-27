@@ -32,5 +32,9 @@
 	<string>Five_Tribes_Score_Calculator</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>FontAwesomeSolid.otf</string>
+	</array>
 </dict>
 </plist>

@@ -14,15 +14,6 @@ namespace Five_Tribes_Score_Calculator
 
             // Bind view model
             BindingContext = ViewModelLocator.MainPageViewModel;
-            BindCommandParameter();
-        }
-
-        // Set command parameter
-        private void BindCommandParameter()
-        {
-            ButtonFT.CommandParameter = GameTypes.FT;
-            ButtonAQ.CommandParameter = GameTypes.AQ;
-            ButtonWS.CommandParameter = GameTypes.WS;
         }
 
         private void ButtonFT_Clicked(System.Object sender, System.EventArgs e)

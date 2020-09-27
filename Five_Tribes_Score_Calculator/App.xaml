@@ -4,6 +4,7 @@
              x:Class="Five_Tribes_Score_Calculator.App">
     <Application.Resources>
         <ResourceDictionary>
+            <!--Global Styles-->
             <Style TargetType="Button">
                 <Setter Property="BackgroundColor" Value="White" />
                 <Setter Property="TextColor" Value="DarkGray" />
@@ -20,6 +21,16 @@
                 <Setter Property="TextColor" Value="LightGray" />
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
+
+            <!--Set static resources for FontAwesome on different platform-->
+            <OnPlatform x:TypeArguments="x:String" x:Key="FontAwesome">
+                <On Platform="iOS" Value="Font Awesome 5 Free" />
+                <On Platform="Android" Value="FontAwesomeSolid.otf#Font Awesome 5 Free Regular" />
+            </OnPlatform>
+
+            <!--FontAwesome icons-->
+            <x:String x:Key="Male">&#xf222;</x:String>
+            <x:String x:Key="Female">&#xf221;</x:String>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,4 +1,6 @@
 ﻿using System;
+using Xamarin.Forms;
+
 namespace Five_Tribes_Score_Calculator.Models
 {
     public class PlayerModel
@@ -13,5 +15,7 @@ namespace Five_Tribes_Score_Calculator.Models
         public ScoreModel Score { get; set; }
 
         public int TotalScore { get; set; }
+
+        public Color GenderColor { get; set; }
     }
 }

@@ -53,11 +53,11 @@
                     <ListView>
                         <ListView.ItemsSource>
                             <x:Array Type="{x:Type m:PlayerModel}">
-                                <m:PlayerModel PlayerId="1" Name="Chloe" Gender="Female" />
-                                <m:PlayerModel PlayerId="2" Name="Jasper" Gender="Male" />
-                                <m:PlayerModel PlayerId="3" Name="John" Gender="Male" />
-                                <m:PlayerModel PlayerId="4" Name="Johnno" Gender="Male" />
-                                <m:PlayerModel PlayerId="5" Name="Vivian" Gender="Female" />
+                                <m:PlayerModel PlayerId="1" Name="Chloe" Gender="{StaticResource Female}" GenderColor="Red" />
+                                <m:PlayerModel PlayerId="2" Name="Jasper" Gender="{StaticResource Male}" GenderColor="DodgerBlue" />
+                                <m:PlayerModel PlayerId="3" Name="John" Gender="{StaticResource Male}" GenderColor="DodgerBlue" />
+                                <m:PlayerModel PlayerId="4" Name="Johnno" Gender="{StaticResource Male}" GenderColor="DodgerBlue" />
+                                <m:PlayerModel PlayerId="5" Name="Vivian" Gender="{StaticResource Female}" GenderColor="Red" />
                             </x:Array>
                         </ListView.ItemsSource>
                         <ListView.ItemTemplate>
@@ -68,7 +68,7 @@
                                                  HorizontalOptions="Fill">
                                         <Label Text="{Binding PlayerId, StringFormat='{0}.'}" />
                                         <Label Text="{Binding Name}" Margin="3,0,3,0" />
-                                        <Label Text="{Binding Gender}" />
+                                        <Label Text="{Binding Gender}" FontFamily="{StaticResource FontAwesome}" FontAttributes="Bold" TextColor="{Binding GenderColor}"/>
                                         <Button Text="Edit" HorizontalOptions="EndAndExpand" WidthRequest="65"/>
                                         <Button Text="Delete" HorizontalOptions="End" WidthRequest="65" BackgroundColor="DarkRed"/>
                                     </StackLayout>
