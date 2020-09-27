@@ -32,7 +32,6 @@
                     <RowDefinition Height="60*" />
                     <RowDefinition Height="60*" />
                     <RowDefinition Height="60*" />
-                    <RowDefinition Height="60*" />
                     <RowDefinition Height="50*" />
                 </Grid.RowDefinitions>
 
@@ -54,23 +53,24 @@
                     <ListView>
                         <ListView.ItemsSource>
                             <x:Array Type="{x:Type m:PlayerModel}">
-                                <m:PlayerModel PlayerId="1" Name="Chloe Liu" Gender="Female" />
-                                <m:PlayerModel PlayerId="2" Name="Jasper Guo" Gender="Male" />
-                                <m:PlayerModel PlayerId="3" Name="John Chen" Gender="Male" />
-                                <m:PlayerModel PlayerId="4" Name="Johnno Zao" Gender="Male" />
-                                <m:PlayerModel PlayerId="5" Name="Vivian Chen" Gender="Female" />
+                                <m:PlayerModel PlayerId="1" Name="Chloe" Gender="Female" />
+                                <m:PlayerModel PlayerId="2" Name="Jasper" Gender="Male" />
+                                <m:PlayerModel PlayerId="3" Name="John" Gender="Male" />
+                                <m:PlayerModel PlayerId="4" Name="Johnno" Gender="Male" />
+                                <m:PlayerModel PlayerId="5" Name="Vivian" Gender="Female" />
                             </x:Array>
                         </ListView.ItemsSource>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
                                     <StackLayout Orientation="Horizontal"
-                                                 Padding="10,8,15,8"
+                                                 Padding="10,8"
                                                  HorizontalOptions="Fill">
                                         <Label Text="{Binding PlayerId, StringFormat='{0}.'}" />
                                         <Label Text="{Binding Name}" Margin="3,0,3,0" />
                                         <Label Text="{Binding Gender}" />
-                                        <Button Text="Edit" HorizontalOptions="EndAndExpand" WidthRequest="70"/>
+                                        <Button Text="Edit" HorizontalOptions="EndAndExpand" WidthRequest="65"/>
+                                        <Button Text="Delete" HorizontalOptions="End" WidthRequest="65" BackgroundColor="DarkRed"/>
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>
@@ -81,13 +81,13 @@
                 <!--Player Name Entry-->
                 <Entry Grid.Row="2"
                        Grid.Column="1"
-                       Grid.ColumnSpan="3"
-                       Placeholder="Enter Player Name"
+                       Grid.ColumnSpan="2"
+                       Placeholder="Enter Name"
                        BackgroundColor="DimGray" />
 
                 <!-- Gender Picker -->
                 <Picker Grid.Row="2"
-                        Grid.Column="4"
+                        Grid.Column="3"
                         Title="Gender">
                     <Picker.Items>
                         <x:String></x:String>
@@ -97,25 +97,18 @@
                 </Picker>
 
                 <!--Add Button-->
-                <Button Grid.Row="3"
-                        Grid.Column="1"
-                        Grid.ColumnSpan="2"
+                <Button Grid.Row="2"
+                        Grid.Column="4"
                         Text="Add" />
 
-                <!--Remove Button-->
+                <!--Calculate Score Button-->
                 <Button Grid.Row="3"
-                        Grid.Column="3"
-                        Grid.ColumnSpan="2"
-                        Text="Remove" />
-
-                <!--Back Button-->
-                <Button Grid.Row="4"
                         Grid.Column="1"
                         Grid.ColumnSpan="4"
                         Text="Calculate Total Score"/>
 
                 <!--Back Button-->
-                <Button Grid.Row="5"
+                <Button Grid.Row="4"
                         Grid.Column="1"
                         Grid.ColumnSpan="4"
                         Text="Back"
