@@ -7,6 +7,7 @@ namespace Five_Tribes_Score_Calculator.Services
 {
     public class DialogServices
     {
+        // Fields
         private string title = string.Empty;
 
         private string message = string.Empty;

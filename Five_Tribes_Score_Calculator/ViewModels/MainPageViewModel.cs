@@ -10,8 +10,8 @@ namespace Five_Tribes_Score_Calculator.ViewModels
     public class MainPageViewModel : BaseViewModel
     {
         // Private fields
-        private int _maximumPlayers = 0;
-        private PlayerCountGenerator _playerCountGenerator = new PlayerCountGenerator();
+        private int maximumPlayers = 0;
+        private PlayerCountGenerator playerCountGenerator = new PlayerCountGenerator();
 
         // Properties
         public ICommand SelectGameType { get; }
@@ -20,37 +20,37 @@ namespace Five_Tribes_Score_Calculator.ViewModels
 
         public GameModel SelectedGame { get; } = new GameModel();
 
-        private string _gameName = "No Game Selected";
+        private string gameName = "No Game Selected";
         public string GameName
         {
-            get => _gameName;
+            get => gameName;
             private set
             {
-                _gameName = value;
+                gameName = value;
                 OnPropertyChanged(nameof(GameName));
             }
         }
 
-        private List<string> _playerCountList = new List<string>();
+        private List<string> playerCountList = new List<string>();
         public List<string> PlayerCountList
         {
-            get => _playerCountList;
+            get => playerCountList;
             private set
             {
-                _playerCountList = value;
+                playerCountList = value;
                 OnPropertyChanged(nameof(PlayerCountList));
             }
         }
 
-        private string _selectedPlayerCount = string.Empty;
+        private string selectedPlayerCount = string.Empty;
         public string SelectedPlayerCount
         {
-            get => _selectedPlayerCount;
+            get => selectedPlayerCount;
             set
             {
                 // Set playCount
-                _selectedPlayerCount = value != null ? value : string.Empty;
-                SelectedGame.PlayerCount = _playerCountGenerator.PlayerCountDic[_selectedPlayerCount];
+                selectedPlayerCount = value != null ? value : string.Empty;
+                SelectedGame.PlayerCount = playerCountGenerator.PlayerCountDic[selectedPlayerCount];
                 OnPropertyChanged(nameof(SelectedPlayerCount));
             }
         }
@@ -63,7 +63,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             SubmitSettings = new Command(async () => await OnSubmitSettings());
 
             // Initialize picker list
-            PlayerCountList = _playerCountGenerator.PopulatePickerItems(_maximumPlayers);
+            PlayerCountList = playerCountGenerator.PopulatePickerItems(maximumPlayers);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             SelectedGame.GameType = gameType;
 
             // Set maximum players
-            _maximumPlayers = 4;
+            maximumPlayers = 4;
 
             // Set selected game name
             switch (SelectedGame.GameType)
@@ -89,12 +89,12 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                     break;
                 case GameTypes.WS:
                     GameName = "Whims Of The Sultan";
-                    _maximumPlayers = 5;
+                    maximumPlayers = 5;
                     break;
             }
 
             // Populate picker items
-            PlayerCountList = _playerCountGenerator.PopulatePickerItems(_maximumPlayers);
+            PlayerCountList = playerCountGenerator.PopulatePickerItems(maximumPlayers);
         }
 
         /// <summary>

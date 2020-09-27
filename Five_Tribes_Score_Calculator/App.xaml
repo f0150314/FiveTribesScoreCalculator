@@ -13,6 +13,7 @@
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
                 <Setter Property="FontSize" Value="Medium" />
             </Style>
             <Style TargetType="Picker">

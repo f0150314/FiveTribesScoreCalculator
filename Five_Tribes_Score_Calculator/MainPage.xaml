@@ -22,8 +22,8 @@
         <!--Outer Grid-->
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="35*" />
-                <RowDefinition Height="65*" />
+                <RowDefinition Height="40*" />
+                <RowDefinition Height="60*" />
             </Grid.RowDefinitions>
 
             <!--Top Image-->
@@ -72,7 +72,6 @@
                 <Picker Grid.Column="1"
                         Grid.ColumnSpan="3"
                         Grid.Row="2"
-                        Margin="0,0,0,10"
                         Title="Number Of Players"
                         ItemsSource="{Binding PlayerCountList}"
                         SelectedItem="{Binding SelectedPlayerCount}">

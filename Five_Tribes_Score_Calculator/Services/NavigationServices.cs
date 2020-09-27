@@ -8,9 +8,9 @@ namespace Five_Tribes_Score_Calculator.Services
     public class NavigationServices
     {
         // Properties
-        private Page _mainPage => Application.Current.MainPage;
+        private Page MainPage => Application.Current.MainPage;
 
-        private Dictionary<string, Type> _pageDic { get; }
+        private Dictionary<string, Type> pageDic { get; }
             = new Dictionary<string, Type>();
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace Five_Tribes_Score_Calculator.Services
         /// </summary>
         /// <param name="key"></param>
         /// <param name="pageType"></param>
-        public void RegisterPages(string key, Type pageType) => _pageDic[key] = pageType;
+        public void RegisterPages(string key, Type pageType) => pageDic[key] = pageType;
 
         /// <summary>
         /// Navigate to particular page
@@ -28,15 +28,15 @@ namespace Five_Tribes_Score_Calculator.Services
         public async Task NavigateTo(string pageKey)
         {
             // Create a new page instance
-            var page = (Page)Activator.CreateInstance(_pageDic[pageKey]);
+            var page = (Page)Activator.CreateInstance(pageDic[pageKey]);
 
-            await _mainPage.Navigation.PushModalAsync(page);
+            await MainPage.Navigation.PushModalAsync(page);
         }
 
         /// <summary>
         /// Go back to previous page
         /// </summary>
         /// <returns></returns>
-        public async Task Goback() => await _mainPage.Navigation.PopModalAsync();
+        public async Task Goback() => await MainPage.Navigation.PopModalAsync();
     }
 }
