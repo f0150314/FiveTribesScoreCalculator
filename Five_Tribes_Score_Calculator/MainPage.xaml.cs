@@ -1,4 +1,5 @@
-﻿using Five_Tribes_Score_Calculator.Helpers;
+﻿using System;
+using Five_Tribes_Score_Calculator.Helpers;
 using Xamarin.Forms;
 
 namespace Five_Tribes_Score_Calculator
@@ -16,25 +17,32 @@ namespace Five_Tribes_Score_Calculator
             BindingContext = ViewModelLocator.MainPageViewModel;
         }
 
-        private void ButtonFT_Clicked(System.Object sender, System.EventArgs e)
+        private void Button_Clicked(object sender, EventArgs e)
         {
-            FrameFT.BorderColor = Color.White;
-            FrameAQ.BorderColor = Color.Default;
-            FrameWS.BorderColor = Color.Default;
-        }
+            // Set border of all frames to default color
+            foreach (var view in GridInner.Children)
+            {
+                if (view != null && view is Frame)
+                {
+                    ((Frame)view).BorderColor = Color.Default;
+                }   
+            }
 
-        private void ButtonAQ_Clicked(System.Object sender, System.EventArgs e)
-        {
-            FrameFT.BorderColor = Color.Default;
-            FrameAQ.BorderColor = Color.White;
-            FrameWS.BorderColor = Color.Default;
-        }
+            ImageButton button = (ImageButton)sender;
 
-        private void ButtonWS_Clicked(System.Object sender, System.EventArgs e)
-        {
-            FrameFT.BorderColor = Color.Default;
-            FrameAQ.BorderColor = Color.Default;
-            FrameWS.BorderColor = Color.White;
+            if (button.Equals(ButtonFT)) {
+                FrameFT.BorderColor = Color.White;
+            }
+
+            if (button.Equals(ButtonAQ))
+            {
+                FrameAQ.BorderColor = Color.White;
+            }
+
+            if (button.Equals(ButtonWS))
+            {
+                FrameWS.BorderColor = Color.White;
+            }
         }
     }
 }

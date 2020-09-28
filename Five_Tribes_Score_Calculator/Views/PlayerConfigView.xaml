@@ -28,7 +28,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60*" />
-                    <RowDefinition Height="250*" />
+                    <RowDefinition Height="260*" />
                     <RowDefinition Height="60*" />
                     <RowDefinition Height="60*" />
                     <RowDefinition Height="60*" />
@@ -112,7 +112,7 @@
                         Grid.Column="1"
                         Grid.ColumnSpan="4"
                         Text="Back"
-                        Command="{Binding NavigateToPreviousPage}"/>
+                        Command="{Binding NavigateToPreviousPage}" />
             </Grid>
         </Grid>
     </ContentPage.Content>
