@@ -64,13 +64,12 @@
                             <DataTemplate>
                                 <ViewCell>
                                     <StackLayout Orientation="Horizontal"
-                                                 Padding="10,8"
+                                                 Padding="10,6"
                                                  HorizontalOptions="Fill">
                                         <Label Text="{Binding PlayerId, StringFormat='{0}.'}" />
                                         <Label Text="{Binding Name}" Margin="3,0,3,0" />
                                         <Label Text="{Binding Gender}" FontFamily="{StaticResource FontAwesome}" FontAttributes="Bold" TextColor="{Binding GenderColor}"/>
-                                        <Button Text="Edit" HorizontalOptions="EndAndExpand" WidthRequest="65"/>
-                                        <Button Text="Delete" HorizontalOptions="End" WidthRequest="65" BackgroundColor="DarkRed"/>
+                                        <Button Text="Delete" HorizontalOptions="EndAndExpand" WidthRequest="70" BackgroundColor="DarkRed"/>
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>
