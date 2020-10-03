@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Five_Tribes_Score_Calculator.ViewModels
+namespace Five_Tribes_Score_Calculator.Models
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class BaseModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -11,7 +11,5 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public virtual void Initialize(object parameter) { }
     }
 }

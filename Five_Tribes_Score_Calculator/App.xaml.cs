@@ -10,8 +10,9 @@ namespace Five_Tribes_Score_Calculator
     public partial class App : Application
     {
         // Properties
-        public static NavigationServices NavigationServices { get; } = new NavigationServices();
-        public static DialogServices DialogServices { get; } = new DialogServices();
+        public static INavigationServices NavigationServices { get; } = new NavigationServices();
+        public static IDialogServices DialogServices { get; } = new DialogServices();
+        public static IPlayerServices PlayerServices { get; } = new PlayerServices();
 
         public App()
         {

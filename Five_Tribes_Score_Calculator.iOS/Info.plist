@@ -23,7 +23,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Five Tribes Score Calculator</string>
 	<key>CFBundleIdentifier</key>
-	<string>john.Project1</string>
+	<string>john.project1</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>

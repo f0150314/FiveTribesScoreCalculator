@@ -4,6 +4,7 @@ using Five_Tribes_Score_Calculator.Helpers;
 using Five_Tribes_Score_Calculator.Models;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using Five_Tribes_Score_Calculator.Services;
 
 namespace Five_Tribes_Score_Calculator.ViewModels
 {
@@ -12,6 +13,8 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         // Private fields
         private int maximumPlayers = 0;
         private PlayerCountGenerator playerCountGenerator = new PlayerCountGenerator();
+        private INavigationServices navigationServices = null;
+        private IDialogServices dialogServices = null;
 
         // Properties
         public ICommand SelectGameType { get; }
@@ -56,11 +59,15 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         }
 
         //Constructor
-        public MainPageViewModel()
+        public MainPageViewModel(INavigationServices navigationServices, IDialogServices dialogServices)
         {
+            //Initialize services
+            this.navigationServices = navigationServices;
+            this.dialogServices = dialogServices;
+
             // Initialize commands
             SelectGameType = new Command<GameTypes>(OnSelectGameType);
-            SubmitSettings = new Command(async () => await OnSubmitSettings());
+            SubmitSettings = new Command(async () => await OnSubmitSettingAsync());
 
             // Initialize picker list
             PlayerCountList = playerCountGenerator.PopulatePickerItems(maximumPlayers);
@@ -100,15 +107,15 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// <summary>
         /// Navigate to next page or show error message if config was not set up.
         /// </summary>
-        private async Task OnSubmitSettings()
+        private async Task OnSubmitSettingAsync()
         {
             if (SelectedGame.GameType != null && SelectedGame.PlayerCount != 0)
             {
-                await App.NavigationServices.NavigateTo(ViewNames.PLAYER_CONFIG_PAGE);
+                await navigationServices.NavigateToAsync(ViewNames.PLAYER_CONFIG_PAGE, SelectedGame);
             }
             else
             {
-                await App.DialogServices.ShowError(SelectedGame);
+                await dialogServices.ShowErrorAsync<GameModel>(SelectedGame);
             }
         }
     }

@@ -50,8 +50,8 @@
                        BorderColor="White"
                        Padding="1">
                     <!--Player ListView-->
-                    <ListView>
-                        <ListView.ItemsSource>
+                    <ListView x:Name="PlayerList" ItemsSource="{Binding Players}">
+                        <!--<ListView.ItemsSource>
                             <x:Array Type="{x:Type m:PlayerModel}">
                                 <m:PlayerModel PlayerId="1" Name="Chloe" Gender="{StaticResource Female}" GenderColor="Red" />
                                 <m:PlayerModel PlayerId="2" Name="Jasper" Gender="{StaticResource Male}" GenderColor="DodgerBlue" />
@@ -59,17 +59,26 @@
                                 <m:PlayerModel PlayerId="4" Name="Johnno" Gender="{StaticResource Male}" GenderColor="DodgerBlue" />
                                 <m:PlayerModel PlayerId="5" Name="Vivian" Gender="{StaticResource Female}" GenderColor="Red" />
                             </x:Array>
-                        </ListView.ItemsSource>
+                        </ListView.ItemsSource>-->
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
                                     <StackLayout Orientation="Horizontal"
                                                  Padding="10,6"
                                                  HorizontalOptions="Fill">
-                                        <Label Text="{Binding PlayerId, StringFormat='{0}.'}" />
-                                        <Label Text="{Binding Name}" Margin="3,0,3,0" />
-                                        <Label Text="{Binding Gender}" FontFamily="{StaticResource FontAwesome}" FontAttributes="Bold" TextColor="{Binding GenderColor}"/>
-                                        <Button Text="Delete" HorizontalOptions="EndAndExpand" WidthRequest="70" BackgroundColor="DarkRed"/>
+                                        <!--<Label Text="{Binding PlayerId, StringFormat='{0}.'}" />-->
+                                        <Label Text="{Binding Name}"
+                                               Margin="3,0" />
+                                        <Label Text="{Binding Gender}"
+                                               FontFamily="{StaticResource FontAwesome}"
+                                               FontAttributes="Bold"
+                                               TextColor="{Binding GenderColor}"/>
+                                        <Button Text="Delete"
+                                                HorizontalOptions="EndAndExpand"
+                                                WidthRequest="70"
+                                                BackgroundColor="DarkRed"
+                                                Command="{Binding Path=BindingContext.DeletePlayer, Source={x:Reference PlayerList}}"
+                                                CommandParameter="{Binding .}"/>
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>
@@ -82,12 +91,14 @@
                        Grid.Column="1"
                        Grid.ColumnSpan="2"
                        Placeholder="Enter Name"
-                       BackgroundColor="DimGray" />
+                       BackgroundColor="DimGray"
+                       Text="{Binding PlayerName}"/>
 
                 <!-- Gender Picker -->
                 <Picker Grid.Row="2"
                         Grid.Column="3"
-                        Title="Gender">
+                        Title="Gender"
+                        SelectedItem="{Binding SelectedGender}">
                     <Picker.Items>
                         <x:String></x:String>
                         <x:String>Male</x:String>
@@ -98,20 +109,21 @@
                 <!--Add Button-->
                 <Button Grid.Row="2"
                         Grid.Column="4"
-                        Text="Add" />
+                        Text="Add"
+                        Command="{Binding AddPlayer}" />
 
                 <!--Calculate Score Button-->
                 <Button Grid.Row="3"
                         Grid.Column="1"
                         Grid.ColumnSpan="4"
-                        Text="Calculate Total Score"/>
+                        Text="Calculate Scores"/>
 
                 <!--Back Button-->
                 <Button Grid.Row="4"
                         Grid.Column="1"
                         Grid.ColumnSpan="4"
                         Text="Back"
-                        Command="{Binding NavigateToPreviousPage}" />
+                        Command="{Binding NavigateBack}" />
             </Grid>
         </Grid>
     </ContentPage.Content>

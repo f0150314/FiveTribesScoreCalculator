@@ -3,7 +3,7 @@ using Five_Tribes_Score_Calculator.Helpers;
 
 namespace Five_Tribes_Score_Calculator.Models
 {
-    public class GameModel
+    public class GameModel : BaseModel
     {
         // Properties
         public int PlayerCount { get; set; } = 0;
