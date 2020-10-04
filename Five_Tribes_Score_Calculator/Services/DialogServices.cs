@@ -87,7 +87,7 @@ namespace Five_Tribes_Score_Calculator.Services
 
                 case DuplicateNameError:
                     title += "wrong!";
-                    message += "Your name has been used, please choose another one";
+                    message += "The specified name already exists";
                     break;
 
                 default:

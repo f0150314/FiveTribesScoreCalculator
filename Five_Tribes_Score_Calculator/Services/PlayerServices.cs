@@ -1,36 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using Five_Tribes_Score_Calculator.Models;
+using Five_Tribes_Score_Calculator.Helpers;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace Five_Tribes_Score_Calculator.Services
 {
     public class PlayerServices : IPlayerServices
     {
-        private PlayerModel player = null;
-
         // Properties
-        private List<PlayerModel> players;
-        public List<PlayerModel> Players
-        {
-            get => players.OrderBy(p => p.Name).ToList();
-            set
-            {
-                players = value;
-            }
-        }
+        public List<PlayerModel> Players { get; set; }
 
         // Constructor
         public PlayerServices()
         {
+            // Initialize player list
             Players = new List<PlayerModel>();
         }
 
         /// <summary>
         /// Get all players
         /// </summary>
-        /// <returns>player list</returns>
-        public List<PlayerModel> GetAllPlayers() => Players;
+        /// <returns>a new ordered player list (a new instance)</returns>
+        public List<PlayerModel> GetAllPlayers()
+        {
+            // Order by Name
+            Players = Players.OrderBy(p => p.Name).ToList();
+
+            // Set Id
+            for (int i = 0; i < Players.Count; i++)
+            {
+                Players[i].Id = i + 1;
+            }
+            
+            return Players;
+        }
 
         /// <summary>
         /// Add a new player
@@ -40,22 +45,28 @@ namespace Five_Tribes_Score_Calculator.Services
         public void AddPlayer(string name, string gender)
         {
             // Create a new player
-            player = new PlayerModel
+            PlayerModel player = new PlayerModel
             {
                 Name = name,
                 Gender = gender
             };
 
             Players.Add(player);
+
+            // Notify a new player is added
+            MessagingCenter.Send(this, Messages.AddPlayerMessage);
         }
 
         /// <summary>
         /// Remove the specified player
         /// </summary>
         /// <param name="player"></param>
-        public void DeletePlayer(object player)
+        public void RemovePlayer(object player)
         {
             Players.Remove((PlayerModel)player);
+
+            // Notify the specified player is removed
+            MessagingCenter.Send(this, Messages.RemovePlayerMessage);
         }
     }
 }

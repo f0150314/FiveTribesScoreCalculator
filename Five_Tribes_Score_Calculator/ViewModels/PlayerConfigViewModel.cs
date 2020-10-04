@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Five_Tribes_Score_Calculator.Models;
+using Five_Tribes_Score_Calculator.Helpers;
 using Five_Tribes_Score_Calculator.Services;
 using Xamarin.Forms;
 
@@ -15,10 +16,15 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         private INavigationServices navigationServices = null;
         private IDialogServices dialogServices = null;
         private IPlayerServices playerServices = null;
+        private int playerCount = 0;
         private string playerName = string.Empty;
         private string selectedGender = string.Empty;
 
         // Properties
+        public ICommand NavigateBack { get; }
+        public ICommand AddPlayer { get; }
+        public ICommand RemovePlayer { get; }
+
         public string PlayerName
         {
             get => playerName;
@@ -39,15 +45,18 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             }
         }
 
-        public ICommand NavigateBack { get; }
+        private ObservableCollection<PlayerModel> players;
+        public ObservableCollection<PlayerModel> Players
+        {
+            get => players;
+            set
+            {
+                players = value;
 
-        public ICommand AddPlayer { get; }
-
-        public ICommand DeletePlayer { get; }
-
-        public GameModel SelectedGame { get; private set; }
-
-        public ObservableCollection<PlayerModel> Players { get; set; }
+                // This is required because of the assignment, if we add items to Players directly, you don't need this for ObservabaleCollection
+                OnPropertyChanged(nameof(Players));
+            }
+        }
 
         // Constructor
         public PlayerConfigViewModel(INavigationServices navigationServices, IDialogServices dialogServices, IPlayerServices playerServices)
@@ -60,17 +69,22 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             // Initialize command
             NavigateBack = new Command(async () => await OnNavigateBackAsync());
             AddPlayer = new Command(async () => await AddPlayerToList());
-            //AddPlayer = new Command(AddPlayerToList);
-            DeletePlayer = new Command(DeletePlayerFromList);
+            RemovePlayer = new Command(RemovePlayerFromList);
 
             // Initialize players
-            //Players = new ObservableCollection<PlayerModel>(playerServices.GetAllPlayers());
+            RefreshPlayerList(null);
 
-            Players = new ObservableCollection<PlayerModel>()
-            {
-                new PlayerModel { Name = "John", Gender = "Male"},
-                new PlayerModel { Name = "Chloe", Gender = "Female" }
-            };
+            // Subscribe messages
+            MessagingCenter.Subscribe<PlayerServices>(this, Messages.AddPlayerMessage, RefreshPlayerList);
+            MessagingCenter.Subscribe<PlayerServices>(this, Messages.RemovePlayerMessage, RefreshPlayerList);
+        }
+
+        /// <summary>
+        /// Refresh a player list
+        /// </summary>
+        private void RefreshPlayerList(PlayerServices sender)
+        {
+            Players = new ObservableCollection<PlayerModel>(playerServices.GetAllPlayers());
         }
 
         /// <summary>
@@ -83,12 +97,12 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         }
 
         /// <summary>
-        /// Get selected game from last page
+        /// Get maximum number of players from last page
         /// </summary>
         /// <param name="parameter"></param>
-        public override void Initialize(object parameter)
+        public override void Initialize(object playerCount)
         {
-            SelectedGame = (GameModel)parameter;
+            this.playerCount = (int)playerCount;
         }
 
         /// <summary>
@@ -96,42 +110,8 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// </summary>
         private async Task AddPlayerToList()
         {
-            //// If player number less than predefined player count
-            //if (Players.Count < SelectedGame.PlayerCount)
-            //{
-            //    // If name and gender are entered
-            //    if (!string.IsNullOrWhiteSpace(PlayerName) && !string.IsNullOrWhiteSpace(SelectedGender))
-            //    {
-            //        // If no duplicate name
-            //        if (!Players.Any(p => p.Name == PlayerName))
-            //        {
-            //            playerServices.AddPlayer(PlayerName, SelectedGender);
-
-            //            //Clear out entry text and gender drop down after adding the player
-            //            PlayerName = string.Empty;
-            //            SelectedGender = string.Empty;
-            //        }
-            //        else
-            //        {
-            //            //To Do: show duplicate name
-            //            await dialogServices.ShowSubmitErrorAsync(SelectedGame);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        // To Do: show name or gender not entered
-            //        await dialogServices.ShowSubmitErrorAsync(SelectedGame);
-            //    } 
-            //}
-            //else
-            //{
-            //    //To Do: show error message.
-            //    await dialogServices.ShowSubmitErrorAsync(SelectedGame);
-            //}
-
-
-
-            if (Players.Count < SelectedGame.PlayerCount)
+            // If number of player in the list is less than predefined player count
+            if (Players.Count < playerCount)
             {
                 // If name and gender are entered
                 if (!string.IsNullOrWhiteSpace(PlayerName) && !string.IsNullOrWhiteSpace(SelectedGender))
@@ -139,41 +119,40 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                     // If no duplicate name
                     if (!Players.Any(p => p.Name == PlayerName))
                     {
-                        PlayerModel player = new PlayerModel { Name = PlayerName, Gender = SelectedGender };
-                        Players.Add(player);
+                        // Add a new player with given details
+                        playerServices.AddPlayer(PlayerName, SelectedGender);
 
-                        //Clear out entry text and gender drop down after adding the player
+                        // Clear out entry text and gender drop down after adding the player
                         PlayerName = string.Empty;
                         SelectedGender = string.Empty;
                     }
                     else
                     {
-                        //To Do: show duplicate name
+                        // Show name already exists error
                         await dialogServices.ShowErrorAsync(DialogServices.DuplicateNameError);
                     }
                 }
                 else
                 {
-                    // To Do: show name or gender not entered
+                    // Show fields not entered error
                     await dialogServices.ShowErrorAsync(DialogServices.MissingFieldError, null, PlayerName, SelectedGender);
                 }
             }
             else
             {
-                //To Do: show error message.
-                await dialogServices.ShowErrorAsync(DialogServices.MaxPlayerCountError, SelectedGame.PlayerCount);
+                // Show maximum number of player is reached error
+                await dialogServices.ShowErrorAsync(DialogServices.MaxPlayerCountError, playerCount);
             }
         }
 
         /// <summary>
-        /// Delete the selected player
+        /// Remove the selected player
         /// </summary>
         /// <param name="player"></param>
-        private void DeletePlayerFromList(object player)
+        private void RemovePlayerFromList(object player)
         {
-            //playerServices.DeletePlayer(player);
-
-            Players.Remove((PlayerModel)player);
+            // Remove the specified player
+            playerServices.RemovePlayer(player);
         }
     }
 }

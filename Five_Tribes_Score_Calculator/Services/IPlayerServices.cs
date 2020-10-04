@@ -10,6 +10,6 @@ namespace Five_Tribes_Score_Calculator.Services
 
         void AddPlayer(string name, string gender);
 
-        void DeletePlayer(object player);
+        void RemovePlayer(object player);
     }
 }

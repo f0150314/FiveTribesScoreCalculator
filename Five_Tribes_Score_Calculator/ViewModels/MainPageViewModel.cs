@@ -18,9 +18,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
 
         // Properties
         public ICommand SelectGameType { get; }
-
         public ICommand SubmitSettings { get; }
-
         public GameModel SelectedGame { get; } = new GameModel();
 
         private string gameName = "No Game Selected";
@@ -111,7 +109,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         {
             if (SelectedGame.GameType != null && SelectedGame.PlayerCount != 0)
             {
-                await navigationServices.NavigateToAsync(ViewNames.PLAYER_CONFIG_PAGE, SelectedGame);
+                await navigationServices.NavigateToAsync(ViewNames.PLAYER_CONFIG_PAGE, SelectedGame.PlayerCount);
             }
             else
             {

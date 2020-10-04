@@ -6,6 +6,8 @@ namespace Five_Tribes_Score_Calculator.Models
 {
     public class PlayerModel : BaseModel
     {
+        public int Id { get; set; }
+
         // Properties
         private string gender;
         public string Gender

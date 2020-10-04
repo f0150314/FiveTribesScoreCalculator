@@ -51,33 +51,24 @@
                        Padding="1">
                     <!--Player ListView-->
                     <ListView x:Name="PlayerList" ItemsSource="{Binding Players}">
-                        <!--<ListView.ItemsSource>
-                            <x:Array Type="{x:Type m:PlayerModel}">
-                                <m:PlayerModel PlayerId="1" Name="Chloe" Gender="{StaticResource Female}" GenderColor="Red" />
-                                <m:PlayerModel PlayerId="2" Name="Jasper" Gender="{StaticResource Male}" GenderColor="DodgerBlue" />
-                                <m:PlayerModel PlayerId="3" Name="John" Gender="{StaticResource Male}" GenderColor="DodgerBlue" />
-                                <m:PlayerModel PlayerId="4" Name="Johnno" Gender="{StaticResource Male}" GenderColor="DodgerBlue" />
-                                <m:PlayerModel PlayerId="5" Name="Vivian" Gender="{StaticResource Female}" GenderColor="Red" />
-                            </x:Array>
-                        </ListView.ItemsSource>-->
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
                                     <StackLayout Orientation="Horizontal"
                                                  Padding="10,6"
                                                  HorizontalOptions="Fill">
-                                        <!--<Label Text="{Binding PlayerId, StringFormat='{0}.'}" />-->
+                                        <Label Text="{Binding Id, StringFormat='{0}.'}" />
                                         <Label Text="{Binding Name}"
                                                Margin="3,0" />
                                         <Label Text="{Binding Gender}"
                                                FontFamily="{StaticResource FontAwesome}"
                                                FontAttributes="Bold"
                                                TextColor="{Binding GenderColor}"/>
-                                        <Button Text="Delete"
+                                        <Button Text="Remove"
                                                 HorizontalOptions="EndAndExpand"
-                                                WidthRequest="70"
+                                                WidthRequest="80"
                                                 BackgroundColor="DarkRed"
-                                                Command="{Binding Path=BindingContext.DeletePlayer, Source={x:Reference PlayerList}}"
+                                                Command="{Binding Path=BindingContext.RemovePlayer, Source={x:Reference PlayerList}}"
                                                 CommandParameter="{Binding .}"/>
                                     </StackLayout>
                                 </ViewCell>
