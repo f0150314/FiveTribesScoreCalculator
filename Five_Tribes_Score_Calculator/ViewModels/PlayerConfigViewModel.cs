@@ -110,17 +110,17 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// </summary>
         private async Task AddPlayerToList()
         {
-            // If number of player in the list is less than predefined player count
-            if (Players.Count < playerCount)
+            // If name and gender are entered
+            if (!string.IsNullOrWhiteSpace(PlayerName) && !string.IsNullOrWhiteSpace(SelectedGender))
             {
-                // If name and gender are entered
-                if (!string.IsNullOrWhiteSpace(PlayerName) && !string.IsNullOrWhiteSpace(SelectedGender))
+                // If number of player in the list is less than predefined player count
+                if (Players.Count < playerCount)
                 {
                     // If no duplicate name
-                    if (!Players.Any(p => p.Name == PlayerName))
+                    if (!Players.Any(p => p.Name.ToLower() == PlayerName.ToLower().Trim()))
                     {
                         // Add a new player with given details
-                        playerServices.AddPlayer(PlayerName, SelectedGender);
+                        playerServices.AddPlayer(PlayerName.Trim(), SelectedGender);
 
                         // Clear out entry text and gender drop down after adding the player
                         PlayerName = string.Empty;
@@ -134,14 +134,14 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                 }
                 else
                 {
-                    // Show fields not entered error
-                    await dialogServices.ShowErrorAsync(DialogServices.MissingFieldError, null, PlayerName, SelectedGender);
+                    // Show can't exceed maximum number of players error
+                    await dialogServices.ShowErrorAsync(DialogServices.MaxPlayerCountError, playerCount);
                 }
             }
             else
             {
-                // Show maximum number of player is reached error
-                await dialogServices.ShowErrorAsync(DialogServices.MaxPlayerCountError, playerCount);
+                // Show fields not entered error
+                await dialogServices.ShowErrorAsync(DialogServices.MissingFieldError, null, PlayerName, SelectedGender);
             }
         }
 
