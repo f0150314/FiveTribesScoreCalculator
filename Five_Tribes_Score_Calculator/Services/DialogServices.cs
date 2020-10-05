@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using Five_Tribes_Score_Calculator.Models;
 using Xamarin.Forms;
 
@@ -10,8 +12,10 @@ namespace Five_Tribes_Score_Calculator.Services
         // Fields
         private string title = string.Empty;
         private string message = string.Empty;
+        private string acceptText = string.Empty;
         private string cancelText = string.Empty;
 
+        // Constants
         public const string MaxPlayerCountError = "MaxPlayerCountError";
         public const string MissingFieldError = "MissingFieldError";
         public const string DuplicateNameError = "DuplicateNameError";
@@ -96,6 +100,39 @@ namespace Five_Tribes_Score_Calculator.Services
             }
 
             await Application.Current.MainPage.DisplayAlert(title, message, cancelText);
+        }
+
+        /// <summary>
+        /// Show winner
+        /// </summary>
+        /// <param name="playerList"></param>
+        /// <returns></returns>
+        public async Task<bool> ShowWinnerAsync(ObservableCollection<PlayerModel> playerList)
+        {
+            int winnerCount = playerList.Count(p => p.IsWinner == true);
+            title = winnerCount == 1 ? "WINNER: " : "WINNERS: ";
+
+            message = "\n";
+
+            // Construct message
+            foreach (PlayerModel players in playerList)
+            {
+                if (players.IsWinner)
+                {
+                    message += $"{players.Name} - Score: {players.TotalScore}\n";
+                }
+            }
+
+            // Get rid of new line
+            if (winnerCount == 1)
+            {
+                message = message.Substring(0, message.Length - 2);
+            }
+
+            acceptText = "Check details";
+            cancelText = "Cancel";
+
+            return await Application.Current.MainPage.DisplayAlert(title, message, acceptText, cancelText);
         }
     }
 }

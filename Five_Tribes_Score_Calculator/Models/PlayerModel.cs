@@ -27,5 +27,7 @@ namespace Five_Tribes_Score_Calculator.Models
         public int TotalScore { get; set; } = 0;
 
         public Color GenderColor { get; set; }
+
+        public bool IsWinner { get; set; } = false;
     }
 }

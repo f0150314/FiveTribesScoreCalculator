@@ -109,7 +109,7 @@
                         Grid.Column="1"
                         Grid.ColumnSpan="4"
                         Text="Calculate Scores"
-                        Command="{Binding CalculateScoreCommand}"/>
+                        Command="{Binding CalculateScoreCommand}" />
 
                 <!--Back Button-->
                 <Button Grid.Row="4"

@@ -172,8 +172,10 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// <returns></returns>
         private async Task CalculateScore()
         {
-            bool showDetails = await Application.Current.MainPage.DisplayAlert("Results: ", "Show winner", "See details", "Cancel");
+            // Show winner/winners
+            bool showDetails = await dialogServices.ShowWinnerAsync(Players);
 
+            // If show details is clicked navigate to scoresheet page
             if (showDetails)
             {
                 // TO DO: Navigate to scoresheet page
