@@ -21,9 +21,10 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         private string selectedGender = string.Empty;
 
         // Properties
-        public ICommand NavigateBack { get; }
-        public ICommand AddPlayer { get; }
-        public ICommand RemovePlayer { get; }
+        public ICommand NavigateBackCommand { get; }
+        public ICommand AddPlayerCommand { get; }
+        public ICommand RemovePlayerCommand { get; }
+        public ICommand CalculateScoreCommand { get; }
 
         public string PlayerName
         {
@@ -67,9 +68,10 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             this.playerServices = playerServices;
 
             // Initialize command
-            NavigateBack = new Command(async () => await OnNavigateBackAsync());
-            AddPlayer = new Command(async () => await AddPlayerToList());
-            RemovePlayer = new Command(RemovePlayerFromList);
+            NavigateBackCommand = new Command(async () => await NavigateBackAsync());
+            AddPlayerCommand = new Command(async () => await AddPlayerToList());
+            RemovePlayerCommand = new Command(RemovePlayerFromList);
+            CalculateScoreCommand = new Command(async () => await CalculateScore(), CanCalculateScore);
 
             // Initialize players
             RefreshPlayerList(null);
@@ -91,7 +93,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// Navigate to previous page
         /// </summary>
         /// <returns></returns>
-        private async Task OnNavigateBackAsync()
+        private async Task NavigateBackAsync()
         {
             await navigationServices.GobackAsync();
         }
@@ -103,6 +105,9 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         public override void Initialize(object playerCount)
         {
             this.playerCount = (int)playerCount;
+
+            // Update CanExecute state
+            ((Command)CalculateScoreCommand).ChangeCanExecute();
         }
 
         /// <summary>
@@ -143,6 +148,9 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                 // Show fields not entered error
                 await dialogServices.ShowErrorAsync(DialogServices.MissingFieldError, null, PlayerName, SelectedGender);
             }
+
+            // Update CanExecute state
+            ((Command)CalculateScoreCommand).ChangeCanExecute();
         }
 
         /// <summary>
@@ -153,6 +161,41 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         {
             // Remove the specified player
             playerServices.RemovePlayer(player);
+
+            // Update CanExecute state
+            ((Command)CalculateScoreCommand).ChangeCanExecute();
+        }
+
+        /// <summary>
+        /// Calculate scores for all players and display the winner and allow them to navigate to scoresheet page
+        /// </summary>
+        /// <returns></returns>
+        private async Task CalculateScore()
+        {
+            bool showDetails = await Application.Current.MainPage.DisplayAlert("Results: ", "Show winner", "See details", "Cancel");
+
+            if (showDetails)
+            {
+                // TO DO: Navigate to scoresheet page
+                await Application.Current.MainPage.DisplayAlert("Go to scoresheet page", "Show score sheet", "OK");
+            }
+        }
+
+        /// <summary>
+        /// Disable button if return false
+        /// </summary>
+        /// <returns></returns>
+        private bool CanCalculateScore()
+        {
+            // If player count doesn't equal to predefined number of players or any players haven't enter scores
+            if (Players.Count != playerCount || Players.Any(p => p.TotalScore == 0))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

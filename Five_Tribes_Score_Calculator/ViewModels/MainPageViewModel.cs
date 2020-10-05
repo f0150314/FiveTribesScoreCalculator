@@ -17,8 +17,8 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         private IDialogServices dialogServices = null;
 
         // Properties
-        public ICommand SelectGameType { get; }
-        public ICommand SubmitSettings { get; }
+        public ICommand SelectGameCommand { get; }
+        public ICommand SubmitSettingCommand { get; }
         public GameModel SelectedGame { get; } = new GameModel();
 
         private string gameName = "No Game Selected";
@@ -64,8 +64,8 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             this.dialogServices = dialogServices;
 
             // Initialize commands
-            SelectGameType = new Command<GameTypes>(OnSelectGameType);
-            SubmitSettings = new Command(async () => await OnSubmitSettingAsync());
+            SelectGameCommand = new Command<GameTypes>(SelectGameType);
+            SubmitSettingCommand = new Command(async () => await SubmitSettingAsync());
 
             // Initialize picker list
             PlayerCountList = playerCountGenerator.PopulatePickerItems(maximumPlayers);
@@ -75,7 +75,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// Set which game is selected and set maximum number of players
         /// </summary>
         /// <param name="gameType"></param>
-        private void OnSelectGameType(GameTypes gameType)
+        private void SelectGameType(GameTypes gameType)
         {
             // Update game model
             SelectedGame.GameType = gameType;
@@ -105,7 +105,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// <summary>
         /// Navigate to next page or show error message if config was not set up.
         /// </summary>
-        private async Task OnSubmitSettingAsync()
+        private async Task SubmitSettingAsync()
         {
             if (SelectedGame.GameType != null && SelectedGame.PlayerCount != 0)
             {

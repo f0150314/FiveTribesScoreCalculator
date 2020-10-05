@@ -7,7 +7,7 @@
             <!--Global Styles-->
             <Style TargetType="Button">
                 <Setter Property="BackgroundColor" Value="White" />
-                <Setter Property="TextColor" Value="DarkGray" />
+                <Setter Property="TextColor" Value="SlateGray" />
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="FontSize" Value="Medium" />
             </Style>

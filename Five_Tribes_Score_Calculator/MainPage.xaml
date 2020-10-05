@@ -14,7 +14,7 @@
             </Style>
             <Style TargetType="ImageButton">
                 <Setter Property="Aspect" Value="Fill" />
-                <Setter Property="Command" Value="{Binding SelectGameType}" />
+                <Setter Property="Command" Value="{Binding SelectGameCommand}" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -82,7 +82,7 @@
                         Grid.Row="3"
                         Grid.ColumnSpan="3"
                         Text="{Binding GameName}"
-                        Command="{Binding SubmitSettings}" />
+                        Command="{Binding SubmitSettingCommand}" />
             </Grid>      
         </Grid>          
     </ContentPage.Content>   
