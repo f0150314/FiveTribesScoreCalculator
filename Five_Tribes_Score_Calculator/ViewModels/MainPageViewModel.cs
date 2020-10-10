@@ -12,6 +12,9 @@ namespace Five_Tribes_Score_Calculator.ViewModels
     {
         // Private fields
         private int maximumPlayers = 0;
+        private string selectedPlayerCount = string.Empty;
+        private string gameName = "No Game Selected";
+        private List<string> playerCountList = new List<string>();
         private PlayerCountGenerator playerCountGenerator = new PlayerCountGenerator();
         private INavigationServices navigationServices = null;
         private IDialogServices dialogServices = null;
@@ -21,7 +24,6 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         public ICommand SubmitSettingCommand { get; }
         public GameModel SelectedGame { get; } = new GameModel();
 
-        private string gameName = "No Game Selected";
         public string GameName
         {
             get => gameName;
@@ -32,7 +34,6 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             }
         }
 
-        private List<string> playerCountList = new List<string>();
         public List<string> PlayerCountList
         {
             get => playerCountList;
@@ -43,7 +44,6 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             }
         }
 
-        private string selectedPlayerCount = string.Empty;
         public string SelectedPlayerCount
         {
             get => selectedPlayerCount;

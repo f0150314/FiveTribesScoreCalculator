@@ -19,6 +19,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         private int playerCount = 0;
         private string playerName = string.Empty;
         private string selectedGender = string.Empty;
+        private ObservableCollection<PlayerModel> players;
 
         // Properties
         public ICommand NavigateBackCommand { get; }
@@ -46,7 +47,6 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             }
         }
 
-        private ObservableCollection<PlayerModel> players;
         public ObservableCollection<PlayerModel> Players
         {
             get => players;
@@ -189,7 +189,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// <returns></returns>
         private bool CanCalculateScore()
         {
-            // If player count doesn't equal to predefined number of players or any players haven't enter scores
+            // If player count doesn't equal to predefined number of players or no score is entered against players
             if (Players.Count != playerCount || Players.Any(p => p.TotalScore == 0))
             {
                 return false;

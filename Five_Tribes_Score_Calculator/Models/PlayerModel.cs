@@ -6,10 +6,12 @@ namespace Five_Tribes_Score_Calculator.Models
 {
     public class PlayerModel : BaseModel
     {
-        public int Id { get; set; }
+        // Private fields
+        private string gender;
 
         // Properties
-        private string gender;
+        public int Id { get; set; }
+
         public string Gender
         {
             get => gender;
@@ -29,5 +31,7 @@ namespace Five_Tribes_Score_Calculator.Models
         public Color GenderColor { get; set; }
 
         public bool IsWinner { get; set; } = false;
+
+        public bool MakrAsComplete { get; set; } = false;
     }
 }

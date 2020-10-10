@@ -63,7 +63,13 @@
                                         <Label Text="{Binding Gender}"
                                                FontFamily="{StaticResource FontAwesome}"
                                                FontAttributes="Bold"
-                                               TextColor="{Binding GenderColor}"/>
+                                               TextColor="{Binding GenderColor}" />
+                                        <Label Text="{StaticResource Checked}"
+                                               FontFamily="{StaticResource FontAwesome}"
+                                               FontAttributes="Bold"
+                                               TextColor="Green"
+                                               IsVisible="{Binding MakrAsComplete}"
+                                               Margin="3,0" />
                                         <Button Text="Remove"
                                                 HorizontalOptions="EndAndExpand"
                                                 WidthRequest="80"
