@@ -13,6 +13,6 @@ namespace Five_Tribes_Score_Calculator.Helpers
             = new PlayerConfigViewModel(App.NavigationServices, App.DialogServices, App.PlayerServices);
 
         public static ScoreSheetViewModel ScoreSheetViewModel { get; }
-            = new ScoreSheetViewModel();
+            = new ScoreSheetViewModel(App.NavigationServices);
     }
 }

@@ -28,6 +28,7 @@
     <None Remove="Resources\WS_Image.jpg" />
     <None Remove="Resources\AQ_Image.jpg" />
     <None Remove="Resources\FT_Header2.jpg" />
+    <None Remove="Resources\FT_Header3.jpg" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\FT_Header.jpg" />
@@ -35,5 +36,6 @@
     <EmbeddedResource Include="Resources\WS_Image.jpg" />
     <EmbeddedResource Include="Resources\AQ_Image.jpg" />
     <EmbeddedResource Include="Resources\FT_Header2.jpg" />
+    <EmbeddedResource Include="Resources\FT_Header3.jpg" />
   </ItemGroup>
 </Project>
