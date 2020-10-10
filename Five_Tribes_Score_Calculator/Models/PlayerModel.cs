@@ -17,7 +17,7 @@ namespace Five_Tribes_Score_Calculator.Models
         public string Name { get; set; }
         public Color GenderColor { get; set; }
         public bool IsWinner { get; set; } = false;
-        public bool MakrAsComplete { get; set; } = true;
+        public bool MakrAsComplete { get; set; } = false;
 
         public string Gender
         {
@@ -67,16 +67,16 @@ namespace Five_Tribes_Score_Calculator.Models
             // Initialize score dictionary
             scoreDic = new Dictionary<string, int>()
             {
-                { "ScoreCoins", 8 },
-                { "ScoreViziers", 50 },
+                { "ScoreCoins", 0 },
+                { "ScoreViziers", 0 },
                 { "ScoreArtisans", 0 },
-                { "ScoreElders", 220 },
-                { "ScoreDjinns", 10 },
-                { "ScorePalmTrees", 73 },
-                { "ScorePalaces", 38 },
-                { "ScoreCamels", 78 },
-                { "ScorePreciousItems", 20 },
-                { "ScoreResources", 10 }
+                { "ScoreElders", 0 },
+                { "ScoreDjinns", 0 },
+                { "ScorePalmTrees", 0 },
+                { "ScorePalaces", 0 },
+                { "ScoreCamels", 0 },
+                { "ScorePreciousItems", 0 },
+                { "ScoreResources", 0 }
             };
         }
     }

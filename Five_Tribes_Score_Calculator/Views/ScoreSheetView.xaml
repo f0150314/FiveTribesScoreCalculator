@@ -10,7 +10,6 @@
             <Setter Property="Aspect" Value="Fill" />
         </Style>
         <Style TargetType="Frame">
-            <!--<Setter Property="BorderColor" Value="White" />-->
             <Setter Property="CornerRadius" Value="0" />
             <Setter Property="Padding" Value="10,3" />
             <Setter Property="HasShadow" Value="False" />
@@ -68,7 +67,7 @@
                 <Image Source="scoresheet_header_total" Grid.Row="11" Grid.Column="1" />
 
                 <!--Collection View-->
-                <CollectionView x:Name="cv" Grid.Row="0" Grid.RowSpan="12" Grid.Column="2" ItemsSource="{Binding Players}">
+                <CollectionView Grid.Row="0" Grid.RowSpan="12" Grid.Column="2" ItemsSource="{Binding Players}">
                     <!--Display items horizontally-->
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Horizontal" />
