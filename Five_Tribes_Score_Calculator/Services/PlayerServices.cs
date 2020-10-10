@@ -44,17 +44,20 @@ namespace Five_Tribes_Score_Calculator.Services
         /// <param name="gender"></param>
         public void AddPlayer(string name, string gender)
         {
-            // Create a new player
-            PlayerModel player = new PlayerModel
+            if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(gender))
             {
-                Name = name,
-                Gender = gender
-            };
+                // Create a new player
+                PlayerModel player = new PlayerModel
+                {
+                    Name = name,
+                    Gender = gender
+                };
 
-            Players.Add(player);
+                Players.Add(player);
 
-            // Notify a new player is added
-            MessagingCenter.Send(this, Messages.AddPlayerMessage);
+                // Notify a new player is added
+                MessagingCenter.Send(this, Messages.AddPlayerMessage);
+            }
         }
 
         /// <summary>
@@ -63,10 +66,13 @@ namespace Five_Tribes_Score_Calculator.Services
         /// <param name="player"></param>
         public void RemovePlayer(object player)
         {
-            Players.Remove((PlayerModel)player);
+            if (player != null)
+            { 
+                Players.Remove((PlayerModel)player);
 
-            // Notify the specified player is removed
-            MessagingCenter.Send(this, Messages.RemovePlayerMessage);
+                // Notify the specified player is removed
+                MessagingCenter.Send(this, Messages.RemovePlayerMessage);
+            }
         }
     }
 }

@@ -32,6 +32,6 @@ namespace Five_Tribes_Score_Calculator.Models
 
         public bool IsWinner { get; set; } = false;
 
-        public bool MakrAsComplete { get; set; } = false;
+        public bool MakrAsComplete { get; set; } = true;
     }
 }

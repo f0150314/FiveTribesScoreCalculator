@@ -104,7 +104,10 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// <param name="parameter"></param>
         public override void Initialize(object playerCount)
         {
-            this.playerCount = (int)playerCount;
+            if (playerCount != null)
+            {
+                this.playerCount = (int)playerCount;
+            }
 
             // Update CanExecute state
             ((Command)CalculateScoreCommand).ChangeCanExecute();
@@ -159,8 +162,11 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// <param name="player"></param>
         private void RemovePlayerFromList(object player)
         {
-            // Remove the specified player
-            playerServices.RemovePlayer(player);
+            if (player != null)
+            {
+                // Remove the specified player
+                playerServices.RemovePlayer(player);
+            }
 
             // Update CanExecute state
             ((Command)CalculateScoreCommand).ChangeCanExecute();
@@ -178,8 +184,8 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             // If show details is clicked navigate to scoresheet page
             if (showDetails)
             {
-                // TO DO: Navigate to scoresheet page
-                await Application.Current.MainPage.DisplayAlert("Go to scoresheet page", "Show score sheet", "OK");
+                // Navigate to scoresheet page
+                await navigationServices.NavigateToAsync(ViewNames.SCORE_SHEET_PAGE, Players);
             }
         }
 
@@ -189,8 +195,8 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// <returns></returns>
         private bool CanCalculateScore()
         {
-            // If player count doesn't equal to predefined number of players or no score is entered against players
-            if (Players.Count != playerCount || Players.Any(p => p.TotalScore == 0))
+            // If player count doesn't equal to predefined number of players or there are players that have not been marked as complete.
+            if (Players.Count != playerCount || Players.Any(p => p.MakrAsComplete != true))
             {
                 return false;
             }
