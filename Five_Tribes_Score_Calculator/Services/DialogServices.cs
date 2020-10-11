@@ -28,7 +28,7 @@ namespace Five_Tribes_Score_Calculator.Services
         /// <returns></returns>
         public async Task ShowErrorAsync<T>(T model) where T : BaseModel
         {
-            title = "Oops! Something is missing!";
+            title = "Oops! Something is wrong!";
             message = "\n";
             cancelText = "OK";
 
@@ -61,7 +61,7 @@ namespace Five_Tribes_Score_Calculator.Services
         /// <returns></returns>
         public async Task ShowErrorAsync(string errorType, int? maxPlayerCount = null, string name = null, string gender = null)
         {
-            title = "Oops! Something is ";
+            title = "Oops! Something is wrong";
             message = "\n";
             cancelText = "OK";
 
@@ -73,7 +73,6 @@ namespace Five_Tribes_Score_Calculator.Services
                     break;
 
                 case MissingFieldError:
-                    title += "missing!";
                     if (string.IsNullOrWhiteSpace(name))
                     {
                         message += "Please enter your name";
@@ -90,7 +89,6 @@ namespace Five_Tribes_Score_Calculator.Services
                     break;
 
                 case DuplicateNameError:
-                    title += "wrong!";
                     message += "The specified name already exists";
                     break;
 

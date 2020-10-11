@@ -32,6 +32,7 @@
             <x:String x:Key="Male">&#xf222;</x:String>
             <x:String x:Key="Female">&#xf221;</x:String>
             <x:String x:Key="Checked">&#xf058;</x:String>
+            <x:String x:Key="Crown">&#xf521;</x:String>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

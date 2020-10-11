@@ -96,20 +96,26 @@
                                     </Grid.RowDefinitions>
 
                                     <!--Cell Images-->
-                                    <Image Source="scoresheet_cell_coin" Grid.Row="1" WidthRequest="80" />
-                                    <Image Source="scoresheet_cell_vizier" Grid.Row="2" WidthRequest="80" />
-                                    <Image Source="scoresheet_cell_artisan" Grid.Row="3" WidthRequest="80" />
-                                    <Image Source="scoresheet_cell_elder" Grid.Row="4" WidthRequest="80" />
-                                    <Image Source="scoresheet_cell_djinn" Grid.Row="5" WidthRequest="80" />
-                                    <Image Source="scoresheet_cell_palmtree" Grid.Row="6" WidthRequest="80" />
-                                    <Image Source="scoresheet_cell_palace" Grid.Row="7" WidthRequest="80" />
-                                    <Image Source="scoresheet_cell_camel" Grid.Row="8" WidthRequest="80" />
-                                    <Image Source="scoresheet_cell_artisan" Grid.Row="9" WidthRequest="80" />
-                                    <Image Source="scoresheet_cell_resource" Grid.Row="10" WidthRequest="80" />
+                                    <Image Source="scoresheet_cell_coin" Grid.Row="1" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_vizier" Grid.Row="2" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_artisan" Grid.Row="3" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_elder" Grid.Row="4" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_djinn" Grid.Row="5" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_palmtree" Grid.Row="6" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_palace" Grid.Row="7" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_camel" Grid.Row="8" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_artisan" Grid.Row="9" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_resource" Grid.Row="10" WidthRequest="0" />
 
                                     <!--Player Scores-->
                                     <Frame Grid.Row="0" BackgroundColor="WhiteSmoke">
-                                        <Label Text="{Binding Name}" />
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{StaticResource Crown}"
+                                                   TextColor="Orange"
+                                                   IsVisible="{Binding IsWinner}"
+                                                   FontFamily="{StaticResource FontAwesome}"/>
+                                            <Label Text="{Binding Name}" />
+                                        </StackLayout>
                                     </Frame>
 
                                     <Label Grid.Row="1" Text="{Binding Path=ScoreDic[ScoreCoins]}" />
