@@ -21,6 +21,7 @@ namespace Five_Tribes_Score_Calculator
             // Register Pages
             NavigationServices.RegisterPages(ViewNames.MAIN_PAGE, typeof(MainPage));
             NavigationServices.RegisterPages(ViewNames.PLAYER_CONFIG_PAGE, typeof(PlayerConfigView));
+            NavigationServices.RegisterPages(ViewNames.EDIT_SCORES_PAGE, typeof(EditScoresView));
             NavigationServices.RegisterPages(ViewNames.SCORE_SHEET_PAGE, typeof(ScoreSheetView));
 
             MainPage = new MainPage();

@@ -107,7 +107,7 @@
                                     <Image Source="scoresheet_cell_artisan" Grid.Row="9" WidthRequest="0" />
                                     <Image Source="scoresheet_cell_resource" Grid.Row="10" WidthRequest="0" />
 
-                                    <!--Player Scores-->
+                                    <!--Player Names-->
                                     <Frame Grid.Row="0" BackgroundColor="WhiteSmoke">
                                         <StackLayout Orientation="Horizontal">
                                             <Label Text="{StaticResource Crown}"
@@ -118,6 +118,7 @@
                                         </StackLayout>
                                     </Frame>
 
+                                    <!--Player Scores-->
                                     <Label Grid.Row="1" Text="{Binding Path=ScoreDic[ScoreCoins]}" />
                                     <Label Grid.Row="2" Text="{Binding Path=ScoreDic[ScoreViziers]}" />
                                     <Label Grid.Row="3" Text="{Binding Path=ScoreDic[ScoreArtisans]}" />

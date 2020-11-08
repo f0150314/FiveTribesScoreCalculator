@@ -25,6 +25,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         public ICommand NavigateBackCommand { get; }
         public ICommand AddPlayerCommand { get; }
         public ICommand RemovePlayerCommand { get; }
+        public ICommand NavigateToEditPage { get; }
         public ICommand CalculateScoreCommand { get; }
 
         public string PlayerName
@@ -69,9 +70,10 @@ namespace Five_Tribes_Score_Calculator.ViewModels
 
             // Initialize command
             NavigateBackCommand = new Command(async () => await NavigateBackAsync());
-            AddPlayerCommand = new Command(async () => await AddPlayerToList());
+            AddPlayerCommand = new Command(async () => await AddPlayerToListAsync());
             RemovePlayerCommand = new Command(RemovePlayerFromList);
-            CalculateScoreCommand = new Command(async () => await CalculateScore(), CanCalculateScore);
+            NavigateToEditPage = new Command<PlayerModel>(async (player) => await NavigateToEditScorePageAsync(player));
+            CalculateScoreCommand = new Command(async () => await CalculateScoreAsync(), CanCalculateScore);
 
             // Initialize players
             RefreshPlayerList(null);
@@ -116,7 +118,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// <summary>
         /// Add a new player with given details to list
         /// </summary>
-        private async Task AddPlayerToList()
+        private async Task AddPlayerToListAsync()
         {
             // If name and gender are entered
             if (!string.IsNullOrWhiteSpace(PlayerName) && !string.IsNullOrWhiteSpace(SelectedGender))
@@ -157,6 +159,19 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         }
 
         /// <summary>
+        /// Redirect the user to enter score page.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        private async Task NavigateToEditScorePageAsync(PlayerModel player)
+        {
+            if (player != null)
+            {
+                await navigationServices.NavigateToAsync(ViewNames.EDIT_SCORES_PAGE, player);
+            }
+        }
+
+        /// <summary>
         /// Remove the selected player
         /// </summary>
         /// <param name="player"></param>
@@ -176,8 +191,10 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// Calculate scores for all players and display the winner and allow them to navigate to scoresheet page
         /// </summary>
         /// <returns></returns>
-        private async Task CalculateScore()
+        private async Task CalculateScoreAsync()
         {
+            // TO DO: Add get winners method
+
             // Show winner/winners
             bool showDetails = await dialogServices.ShowWinnerAsync(Players);
 

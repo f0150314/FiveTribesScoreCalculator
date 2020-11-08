@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:h="clr-namespace:Five_Tribes_Score_Calculator.Helpers"
-             xmlns:m="clr-namespace:Five_Tribes_Score_Calculator.Models"
              x:Class="Five_Tribes_Score_Calculator.Views.PlayerConfigView"
              BackgroundColor="Black">
     <ContentPage.Content>
@@ -54,6 +53,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
+                                    <!--ListView-->
                                     <StackLayout Orientation="Horizontal"
                                                  Padding="10,6"
                                                  HorizontalOptions="Fill">
@@ -70,14 +70,21 @@
                                                TextColor="Green"
                                                IsVisible="{Binding MakrAsComplete}"
                                                Margin="3,0" />
-                                        <Button Text="Remove"
+                                        <Button Text="Edit"
                                                 HorizontalOptions="EndAndExpand"
-                                                WidthRequest="80"
-                                                BackgroundColor="DarkRed"
-                                                TextColor="LightGray"
-                                                Command="{Binding Path=BindingContext.RemovePlayerCommand, Source={x:Reference PlayerList}}"
-                                                CommandParameter="{Binding .}"/>
+                                                WidthRequest="70"
+                                                BackgroundColor="WhiteSmoke"
+                                                TextColor="DimGray"
+                                                Command="{Binding Path=BindingContext.NavigateToEditPage, Source={x:Reference PlayerList}}"
+                                                CommandParameter="{Binding .}" />
                                     </StackLayout>
+                                    <!--Menu Item-->
+                                    <ViewCell.ContextActions>
+                                        <MenuItem Text="Delete"
+                                                  Command="{Binding Path=BindingContext.RemovePlayerCommand, Source={x:Reference PlayerList}}"
+                                                  CommandParameter="{Binding .}"
+                                                  IsDestructive="True" />
+                                    </ViewCell.ContextActions>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>

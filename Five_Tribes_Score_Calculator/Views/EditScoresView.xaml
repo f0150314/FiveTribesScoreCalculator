@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:Five_Tribes_Score_Calculator.Helpers"
+             x:Class="Five_Tribes_Score_Calculator.Views.EditScoresView"
+             BackgroundColor="Black">
+    <ContentPage.Resources>
+        <Style TargetType="Entry">
+            <Setter Property="Keyboard" Value="Numeric"/>
+            <Setter Property="WidthRequest" Value="230" />
+            <Setter Property="PlaceholderColor" Value="DarkSlateGray" />
+        </Style>
+        <Style TargetType="StackLayout">
+            <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <!--Outer Grid-->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40*" />
+                <RowDefinition Height="44*" />
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+
+            <!--Top Image-->
+            <Image Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Header4.jpg}"
+                   Aspect="Fill" Grid.Row="0" />
+
+            <!--Table View-->
+            <TableView Grid.Row="1">
+                <TableRoot>
+                    <TableSection Title="{Binding Path=Player.Name, StringFormat='Player: {0}'}" TextColor="LightBlue">
+                        <ViewCell>
+                            <StackLayout>
+                                <Image Source="scoresheet_header_coin" />
+                                <Entry Placeholder="Points for Coins" />
+                            </StackLayout>
+                        </ViewCell>
+                        <ViewCell>
+                            <StackLayout>
+                                <Image Source="scoresheet_header_vizier" />
+                                <Entry Placeholder="Points for Viziers" />
+                            </StackLayout>
+                        </ViewCell>
+                        <ViewCell>
+                            <StackLayout>
+                                <Image Source="scoresheet_header_elder" />
+                                <Entry Placeholder="Points for Elders" />
+                            </StackLayout>
+                        </ViewCell>
+                        <ViewCell>
+                            <StackLayout>
+                                <Image Source="scoresheet_header_djinn" />
+                                <Entry Placeholder="Points for Djinns" />
+                            </StackLayout>
+                        </ViewCell>
+                        <ViewCell>
+                            <StackLayout>
+                                <Image Source="scoresheet_header_palmtree" />
+                                <Entry Placeholder="Points for Palm Trees" />
+                            </StackLayout>
+                        </ViewCell>
+                        <ViewCell>
+                            <StackLayout>
+                                <Image Source="scoresheet_header_palace" />
+                                <Entry Placeholder="Points for Palaces" />
+                            </StackLayout>
+                        </ViewCell>
+                        <ViewCell>
+                            <StackLayout>
+                                <Image Source="scoresheet_header_camel" />
+                                <Entry Placeholder="Points for Camels" />
+                            </StackLayout>
+                        </ViewCell>
+                        <ViewCell>
+                            <StackLayout>
+                                <Image Source="scoresheet_header_resource" />
+                                <Entry Placeholder="Points for Resources" />
+                            </StackLayout>
+                        </ViewCell>
+                        <ViewCell IsEnabled="False">
+                            <StackLayout>
+                                <Image Source="scoresheet_header_artisan" />
+                                <Entry Placeholder="Points for Artisans" />
+                            </StackLayout>
+                        </ViewCell>
+                        <ViewCell IsEnabled="False">
+                            <StackLayout>
+                                <Image Source="scoresheet_header_preciousitem" />
+                                <Entry Placeholder="Points for Precious Items" />
+                            </StackLayout>
+                        </ViewCell>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+
+            <!--Confirm Button-->
+            <Button x:Name="btnConfirm"
+                    Text="Confirm"
+                    Command="{Binding ConfirmEditCommand}"
+                    Grid.Row="2"/>
+
+            <!--Cancel Button-->
+            <Button Text="Cancel"
+                    Command="{Binding NavigateBackCommand}"
+                    Grid.Row="3"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
