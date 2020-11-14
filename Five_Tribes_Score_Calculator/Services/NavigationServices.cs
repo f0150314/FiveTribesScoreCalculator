@@ -26,7 +26,7 @@ namespace Five_Tribes_Score_Calculator.Services
         /// </summary>
         /// <param name="pageKey"></param>
         /// <returns></returns>
-        public async Task NavigateToAsync(string pageKey, object parameter = null)
+        public async Task NavigateToAsync(string pageKey, object parameter = null, object secondParameter = null)
         {
             // Create a new page instance
             var page = (Page)Activator.CreateInstance(pageDic[pageKey]);
@@ -34,7 +34,14 @@ namespace Five_Tribes_Score_Calculator.Services
             await MainPage.Navigation.PushModalAsync(page);
 
             // Initialize passed parameter
-            ((BaseViewModel)page.BindingContext).Initialize(parameter);
+            if (secondParameter == null)
+            {
+                ((BaseViewModel)page.BindingContext).Initialize(parameter);
+            }
+            else
+            {
+                ((BaseViewModel)page.BindingContext).Initialize(parameter, secondParameter);
+            }
         }
 
         /// <summary>

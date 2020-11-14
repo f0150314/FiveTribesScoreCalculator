@@ -41,13 +41,13 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// <summary>
         /// Initialize player list.
         /// </summary>
-        /// <param name="parameter"></param>
-        public override void Initialize(object parameter)
+        /// <param name="players"></param>
+        public override void Initialize(object players)
         {
             // Passing players as a parameter to this view model and initialize the player list.
-            if (parameter != null)
+            if (players != null)
             {
-                Players = (ObservableCollection<PlayerModel>)parameter;
+                Players = (ObservableCollection<PlayerModel>)players;
             }
         }
 

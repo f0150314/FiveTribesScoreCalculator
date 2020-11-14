@@ -109,7 +109,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         {
             if (SelectedGame.GameType != null && SelectedGame.PlayerCount != 0)
             {
-                await navigationServices.NavigateToAsync(ViewNames.PLAYER_CONFIG_PAGE, SelectedGame.PlayerCount);
+                await navigationServices.NavigateToAsync(ViewNames.PLAYER_CONFIG_PAGE, SelectedGame);
             }
             else
             {

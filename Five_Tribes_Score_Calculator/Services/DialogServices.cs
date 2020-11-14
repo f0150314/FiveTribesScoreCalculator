@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Five_Tribes_Score_Calculator.Models;
 using Xamarin.Forms;
+using System.Text;
 
 namespace Five_Tribes_Score_Calculator.Services 
 {
@@ -19,7 +21,6 @@ namespace Five_Tribes_Score_Calculator.Services
         public const string MaxPlayerCountError = "MaxPlayerCountError";
         public const string MissingFieldError = "MissingFieldError";
         public const string DuplicateNameError = "DuplicateNameError";
-
 
         /// <summary>
         /// Showing error popup
@@ -55,7 +56,95 @@ namespace Five_Tribes_Score_Calculator.Services
         }
 
         /// <summary>
-        /// Show error popup 2
+        /// Showing error popup 2
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task ShowErrorAsync(Dictionary<string, string> scores, bool isFieldEnable)
+        {
+            title = "Oops! Something is wrong!";
+            cancelText = "OK";
+
+            // Find keys of scores with an empty value
+            List<string> scoreKeys = scores.Where(s => s.Value.Contains('.')).Select(s => s.Key).ToList();
+
+            // Building an error message
+            int index = 0;
+            string scoreName = string.Empty;
+            StringBuilder message = new StringBuilder("\n");
+
+            scoreKeys.ForEach(k =>
+            {
+                switch (k)
+                {
+                    case "COINS":
+                        scoreName = "Coins";
+                        index += 1;
+                        break;
+                    case "VIZIERS":
+                        scoreName = "Viziers";
+                        index += 1;
+                        break;
+                    case "ELDERS":
+                        scoreName = "Elders";
+                        index += 1;
+                        break;
+                    case "DJINNS":
+                        scoreName = "Djinns";
+                        index += 1;
+                        break;
+                    case "TREES":
+                        scoreName = "Palm trees";
+                        index += 1;
+                        break;
+                    case "PALACES":
+                        scoreName = "Palaces";
+                        index += 1;
+                        break;
+                    case "CAMELS":
+                        scoreName = "Camels";
+                        index += 1;
+                        break;
+                    case "RESOURCES":
+                        scoreName = "Resources";
+                        index += 1;
+                        break;
+                    case "ARTISANS":
+                        if (isFieldEnable)
+                        {
+                            scoreName = "Artisans";
+                            index += 1;
+                        }
+                        else
+                        {
+                            scoreName = "Skip";
+                        }
+                        break;
+                    case "ITEMS":
+                        if (isFieldEnable)
+                        {
+                            scoreName = "Precious items";
+                            index += 1;
+                        }
+                        else
+                        {
+                            scoreName = "Skip";
+                        }
+                        break;
+                }
+
+                // This is done to prevent Resources from looping through three times due to every element in the list will call this function
+                if (!scoreName.Equals("Skip"))
+                {
+                    message.AppendFormat("{0}. {1}: Invalid character dot(.).\n", index, scoreName);
+                }
+            });
+
+            await Application.Current.MainPage.DisplayAlert(title, message.ToString().TrimEnd(), cancelText);
+        }
+
+        /// <summary>
+        /// Show error popup 3
         /// </summary>
         /// <param name="errorType"></param>
         /// <returns></returns>
@@ -68,7 +157,6 @@ namespace Five_Tribes_Score_Calculator.Services
             switch (errorType)
             {
                 case MaxPlayerCountError:
-                    title += "wrong!";
                     message += $"Maximum number of players is {maxPlayerCount}";
                     break;
 
@@ -121,16 +209,10 @@ namespace Five_Tribes_Score_Calculator.Services
                 }
             }
 
-            // Get rid of new line
-            if (winnerCount == 1)
-            {
-                message = message.Substring(0, message.Length - 2);
-            }
-
-            acceptText = "Check details";
+            acceptText = "View score sheet";
             cancelText = "Cancel";
 
-            return await Application.Current.MainPage.DisplayAlert(title, message, acceptText, cancelText);
+            return await Application.Current.MainPage.DisplayAlert(title, message.TrimEnd(), acceptText, cancelText);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Five_Tribes_Score_Calculator.Services
     {
         void RegisterPages(string key, Type pageType);
 
-        Task NavigateToAsync(string pageKey, object parameter = null);
+        Task NavigateToAsync(string pageKey, object parameter = null, object secondParameter = null);
 
         Task GobackAsync();
     }

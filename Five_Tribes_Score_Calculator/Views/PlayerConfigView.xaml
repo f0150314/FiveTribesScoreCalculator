@@ -68,7 +68,7 @@
                                                FontFamily="{StaticResource FontAwesome}"
                                                FontAttributes="Bold"
                                                TextColor="Green"
-                                               IsVisible="{Binding MakrAsComplete}"
+                                               IsVisible="{Binding MarkAsComplete}"
                                                Margin="3,0" />
                                         <Button Text="Edit"
                                                 HorizontalOptions="EndAndExpand"

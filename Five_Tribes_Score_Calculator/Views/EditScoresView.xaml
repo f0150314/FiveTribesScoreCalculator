@@ -36,61 +36,81 @@
                         <ViewCell>
                             <StackLayout>
                                 <Image Source="scoresheet_header_coin" />
-                                <Entry Placeholder="Points for Coins" />
+                                <Entry Placeholder="Points for Coins"
+                                       Text="{Binding Scores[COINS]}"
+                                       ClearButtonVisibility="WhileEditing" />
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
                             <StackLayout>
                                 <Image Source="scoresheet_header_vizier" />
-                                <Entry Placeholder="Points for Viziers" />
+                                <Entry Placeholder="Points for Viziers"
+                                       Text="{Binding Scores[VIZIERS]}"
+                                       ClearButtonVisibility="WhileEditing"/>
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
                             <StackLayout>
                                 <Image Source="scoresheet_header_elder" />
-                                <Entry Placeholder="Points for Elders" />
+                                <Entry Placeholder="Points for Elders"
+                                       Text="{Binding Scores[ELDERS]}"
+                                       ClearButtonVisibility="WhileEditing" />
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
                             <StackLayout>
                                 <Image Source="scoresheet_header_djinn" />
-                                <Entry Placeholder="Points for Djinns" />
+                                <Entry Placeholder="Points for Djinns"
+                                       Text="{Binding Scores[DJINNS]}"
+                                       ClearButtonVisibility="WhileEditing" />
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
                             <StackLayout>
                                 <Image Source="scoresheet_header_palmtree" />
-                                <Entry Placeholder="Points for Palm Trees" />
+                                <Entry Placeholder="Points for Palm Trees"
+                                       Text="{Binding Scores[TREES]}"
+                                       ClearButtonVisibility="WhileEditing" />
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
                             <StackLayout>
                                 <Image Source="scoresheet_header_palace" />
-                                <Entry Placeholder="Points for Palaces" />
+                                <Entry Placeholder="Points for Palaces"
+                                       Text="{Binding Scores[PALACES]}"
+                                       ClearButtonVisibility="WhileEditing" />
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
                             <StackLayout>
                                 <Image Source="scoresheet_header_camel" />
-                                <Entry Placeholder="Points for Camels" />
+                                <Entry Placeholder="Points for Camels"
+                                       Text="{Binding Scores[CAMELS]}"
+                                       ClearButtonVisibility="WhileEditing" />
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
                             <StackLayout>
                                 <Image Source="scoresheet_header_resource" />
-                                <Entry Placeholder="Points for Resources" />
+                                <Entry Placeholder="Points for Resources"
+                                       Text="{Binding Scores[RESOURCES]}"
+                                       ClearButtonVisibility="WhileEditing" />
                             </StackLayout>
                         </ViewCell>
-                        <ViewCell IsEnabled="False">
+                        <ViewCell IsEnabled="{Binding IsFieldEnable}">
                             <StackLayout>
                                 <Image Source="scoresheet_header_artisan" />
-                                <Entry Placeholder="Points for Artisans" />
+                                <Entry Placeholder="Points for Artisans"
+                                       Text="{Binding Scores[ARTISANS]}"
+                                       ClearButtonVisibility="WhileEditing" />
                             </StackLayout>
                         </ViewCell>
-                        <ViewCell IsEnabled="False">
+                        <ViewCell IsEnabled="{Binding IsFieldEnable}">
                             <StackLayout>
                                 <Image Source="scoresheet_header_preciousitem" />
-                                <Entry Placeholder="Points for Precious Items" />
+                                <Entry Placeholder="Points for Precious Items"
+                                       Text="{Binding Scores[ITEMS]}"
+                                       ClearButtonVisibility="WhileEditing" />
                             </StackLayout>
                         </ViewCell>
                     </TableSection>

@@ -10,14 +10,24 @@ namespace Five_Tribes_Score_Calculator.Models
         // Private fields
         private string gender;
         private int totalScore = 0;
-        private Dictionary<string, int> scoreDic;
+        private Dictionary<string, string> scores;
+        private bool markAsComplete = false;
 
         // Properties
         public int Id { get; set; }
         public string Name { get; set; }
         public Color GenderColor { get; set; }
         public bool IsWinner { get; set; } = false;
-        public bool MakrAsComplete { get; set; } = false;
+
+        public bool MarkAsComplete
+        {
+            get => markAsComplete;
+            set
+            {
+                markAsComplete = value;
+                OnPropertyChanged(nameof(MarkAsComplete));
+            }
+        } 
 
         public string Gender
         {
@@ -35,9 +45,10 @@ namespace Five_Tribes_Score_Calculator.Models
         {
             get
             {
-                if (scoreDic != null && scoreDic.Count > 0)
+                if (Scores != null && Scores.Count > 0)
                 {
-                    return scoreDic.Sum(s => s.Value);
+                    // Add scores if it is not an empty string.
+                    return Scores.Where(s => !string.IsNullOrWhiteSpace(s.Value)).Sum(s => Convert.ToInt32(s.Value));
                 }
                 else
                 {
@@ -51,33 +62,14 @@ namespace Five_Tribes_Score_Calculator.Models
             }
         }
 
-        public Dictionary<string, int> ScoreDic
+        public Dictionary<string, string> Scores
         {
-            get => scoreDic;
+            get => scores;
             set
             {
-                scoreDic = value;
-                OnPropertyChanged(nameof(ScoreDic));
+                scores = value;
+                OnPropertyChanged(nameof(Scores));
             }
-        }
-
-        // Constructor
-        public PlayerModel()
-        {
-            // Initialize score dictionary
-            scoreDic = new Dictionary<string, int>()
-            {
-                { "ScoreCoins", 0 },
-                { "ScoreViziers", 0 },
-                { "ScoreArtisans", 0 },
-                { "ScoreElders", 0 },
-                { "ScoreDjinns", 0 },
-                { "ScorePalmTrees", 0 },
-                { "ScorePalaces", 0 },
-                { "ScoreCamels", 0 },
-                { "ScorePreciousItems", 0 },
-                { "ScoreResources", 0 }
-            };
         }
     }
 }

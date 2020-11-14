@@ -13,5 +13,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         }
 
         public virtual void Initialize(object parameter) { }
+
+        public virtual void Initialize(object parameter, object secondParameter) { }
     }
 }

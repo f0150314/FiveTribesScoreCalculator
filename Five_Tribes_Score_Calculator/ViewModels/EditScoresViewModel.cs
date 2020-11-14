@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Five_Tribes_Score_Calculator.Services;
 using Five_Tribes_Score_Calculator.Models;
+using Five_Tribes_Score_Calculator.Helpers;
 using Xamarin.Forms;
 
 namespace Five_Tribes_Score_Calculator.ViewModels
@@ -11,33 +14,43 @@ namespace Five_Tribes_Score_Calculator.ViewModels
     {
         // Fields
         private INavigationServices navigationServices = null;
-        private IPlayerServices playerServices = null;
-        private PlayerModel player = null;
+        private IDialogServices dialogServices = null;
+        private PlayerModel player;
+        private bool isFieldEnable = false;
+        private Dictionary<string, string> scores = null;
 
         // Properties
         public ICommand NavigateBackCommand { get; }
         public ICommand ConfirmEditCommand { get; }
 
+        public bool IsFieldEnable
+        {
+            get => isFieldEnable;
+            set { isFieldEnable = value; OnPropertyChanged(nameof(IsFieldEnable)); }
+        } 
+
         public PlayerModel Player
         {
             get => player;
-            set
-            {
-                player = value;
-                OnPropertyChanged(nameof(Player));
-            }
+            set { player = value; OnPropertyChanged(nameof(Player)); }
+        }
+
+        public Dictionary<string, string> Scores
+        {
+            get => scores;
+            set { scores = value; OnPropertyChanged(nameof(Scores)); }
         }
 
         // Constructor
-        public EditScoresViewModel(INavigationServices navigationServices, IPlayerServices playerServices)
+        public EditScoresViewModel(INavigationServices navigationServices, IDialogServices dialogServices)
         {
             // Initialise services
             this.navigationServices = navigationServices;
-            this.playerServices = playerServices;
+            this.dialogServices = dialogServices;
 
             // Initialise commands
             NavigateBackCommand = new Command(async () => await NavigateBackAsync());
-            ConfirmEditCommand = new Command(async () => await ConfirmEditAsync(), CanConfirmEdit);
+            ConfirmEditCommand = new Command(async () => await ConfirmEditAsync());
         }
 
         /// <summary>
@@ -46,19 +59,48 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// <returns></returns>
         private async Task ConfirmEditAsync()
         {
-            // TO DO: Add confirmation message and store scores to score model
+            if (IsValueValidated())
+            {
+                // Reformat values before saving it (in case there are some values with leading zeros)
+                Scores.Where(s => s.Value.Contains("0")).Select(s => s.Key).ToList().ForEach(k => Scores[k] = Convert.ToInt32(Scores[k]).ToString());
 
-            await navigationServices.GobackAsync();
+                // Update empty scores to 0
+                Scores.Where(s => string.IsNullOrWhiteSpace(s.Value)).Select(s => s.Key).ToList().ForEach(k => Scores[k] = "0");
+
+                // Record scores against the player.
+                Player.Scores = Scores;
+
+                // Mark this user as complete.
+                Player.MarkAsComplete = true;
+
+                // Clear entries
+                ClearScrores();
+
+                await navigationServices.GobackAsync();
+            }
+            else
+            {
+                // Show mandatory fields must be entered message.
+                await dialogServices.ShowErrorAsync(Scores, IsFieldEnable);
+            }
         }
 
         /// <summary>
-        /// Return true or false to determine if confirm button is clickable.
+        /// Return true or false to determine if scores contain decimal point
         /// </summary>
         /// <returns></returns>
-        private bool CanConfirmEdit()
+        private bool IsValueValidated()
         {
-            // TO DO: Add logic to decide whether the confirm button can be clicked or not.
-            return true;
+            if (Scores["COINS"].Contains('.') || Scores["VIZIERS"].Contains('.') || Scores["ELDERS"].Contains('.') ||
+                Scores["DJINNS"].Contains('.') || Scores["TREES"].Contains('.') || Scores["PALACES"].Contains('.') ||
+                Scores["CAMELS"].Contains('.') || Scores["RESOURCES"].Contains('.'))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         /// <summary>
@@ -67,19 +109,58 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         /// <returns></returns>
         private async Task NavigateBackAsync()
         {
+            //Clear entries
+            ClearScrores();
+
             await navigationServices.GobackAsync();
         }
 
         /// <summary>
-        /// Initialize the player object.
+        /// Initialize the player, scores object and enable edit score fields
         /// </summary>
         /// <param name="player"></param>
-        public override void Initialize(object player)
+        public override void Initialize(object player, object game)
         {
             if (player != null)
             {
                 Player = player as PlayerModel;
+
+                if (Player.Scores is null)
+                {
+                    // Create an empty dictionary
+                    Scores = new Dictionary<string, string>()
+                    {
+                        { "COINS", "" },
+                        { "VIZIERS", "" },
+                        { "ELDERS", "" },
+                        { "DJINNS", "" },
+                        { "TREES", "" },
+                        { "PALACES", "" },
+                        { "CAMELS", "" },
+                        { "RESOURCES", "" },
+                        { "ARTISANS", "" },
+                        { "ITEMS", "" },
+                    };
+                }
+                else
+                {
+                    Scores = Player.Scores;
+                }
             }
+
+            // If game type is base game, disable fields.
+            if (game != null)
+            {
+                IsFieldEnable = !((GameModel)game).GameType.Equals(GameTypes.FT);              
+            }
+        }
+
+        /// <summary>
+        /// Clear out entries' value.
+        /// </summary>
+        private void ClearScrores()
+        {
+            Scores = null;
         }
     }
 }
