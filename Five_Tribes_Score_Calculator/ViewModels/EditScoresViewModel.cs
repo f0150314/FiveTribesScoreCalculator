@@ -113,6 +113,9 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                 // Mark this user as complete.
                 Player.MarkAsComplete = true;
 
+                // Notify the scores has been saved.
+                MessagingCenter.Send(this, Messages.MarkAsCompleteMessage);
+
                 // Clear entries
                 ClearScrores();
 

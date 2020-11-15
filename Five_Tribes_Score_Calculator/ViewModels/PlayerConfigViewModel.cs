@@ -77,19 +77,23 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             CalculateScoreCommand = new Command(async () => await CalculateScoreAsync(), CanCalculateScore);
 
             // Initialize players
-            RefreshPlayerList(null);
+            RefreshPlayerList<object>(null);
 
             // Subscribe messages
             MessagingCenter.Subscribe<PlayerServices>(this, Messages.AddPlayerMessage, RefreshPlayerList);
             MessagingCenter.Subscribe<PlayerServices>(this, Messages.RemovePlayerMessage, RefreshPlayerList);
+            MessagingCenter.Subscribe<EditScoresViewModel>(this, Messages.MarkAsCompleteMessage, RefreshPlayerList);
         }
 
         /// <summary>
         /// Refresh a player list
         /// </summary>
-        private void RefreshPlayerList(PlayerServices sender)
+        private void RefreshPlayerList<T>(T sender)
         {
             Players = new ObservableCollection<PlayerModel>(playerServices.GetAllPlayers());
+
+            // Update CanExecute state
+            ((Command)CalculateScoreCommand).ChangeCanExecute();
         }
 
         /// <summary>
@@ -121,7 +125,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                 this.gameModel = (GameModel)gameModel;
             }
 
-            // Update CanExecute state
+            // Update CanExecute state (When people change game type)
             ((Command)CalculateScoreCommand).ChangeCanExecute();
         }
 
@@ -163,9 +167,6 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                 // Show fields not entered error
                 await dialogServices.ShowErrorAsync(DialogServices.MissingFieldError, null, PlayerName, SelectedGender);
             }
-
-            // Update CanExecute state
-            ((Command)CalculateScoreCommand).ChangeCanExecute();
         }
 
         /// <summary>
@@ -179,9 +180,6 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                 // Remove the specified player
                 playerServices.RemovePlayer(player);
             }
-
-            // Update CanExecute state
-            ((Command)CalculateScoreCommand).ChangeCanExecute();
         }
 
         /// <summary>
