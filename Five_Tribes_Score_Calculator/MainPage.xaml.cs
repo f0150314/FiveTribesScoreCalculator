@@ -1,56 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Five_Tribes_Score_Calculator.Helpers;
-using Five_Tribes_Score_Calculator.ViewModels;
 using Xamarin.Forms;
 
 namespace Five_Tribes_Score_Calculator
 {
     public partial class MainPage : ContentPage
     {
-        //Another way to access view model
+        // Another way to access view model
         //private MainPageViewModel VM => (MainPageViewModel)BindingContext;
 
         public MainPage()
         {
             InitializeComponent();
 
-            //Bind view model
+            // Bind view model
             BindingContext = ViewModelLocator.MainPageViewModel;
-            BindCommandParameter();
         }
 
-        //Set command parameter
-        private void BindCommandParameter()
+        private void Button_Clicked(object sender, EventArgs e)
         {
-            ButtonFT.CommandParameter = GameTypes.FT;
-            ButtonAQ.CommandParameter = GameTypes.AQ;
-            ButtonWS.CommandParameter = GameTypes.WS;
-        }
+            // Set border of all frames to default color
+            foreach (var view in GridInner.Children)
+            {
+                if (view != null && view is Frame)
+                {
+                    ((Frame)view).BorderColor = Color.Default;
+                }   
+            }
 
-        private void ButtonFT_Clicked(System.Object sender, System.EventArgs e)
-        {
-            FrameFT.BorderColor = Color.White;
-            FrameAQ.BorderColor = Color.Default;
-            FrameWS.BorderColor = Color.Default;
-        }
+            ImageButton button = (ImageButton)sender;
 
-        private void ButtonAQ_Clicked(System.Object sender, System.EventArgs e)
-        {
-            FrameFT.BorderColor = Color.Default;
-            FrameAQ.BorderColor = Color.White;
-            FrameWS.BorderColor = Color.Default;
-        }
+            if (button.Equals(ButtonFT)) {
+                FrameFT.BorderColor = Color.White;
+            }
 
-        private void ButtonWS_Clicked(System.Object sender, System.EventArgs e)
-        {
-            FrameFT.BorderColor = Color.Default;
-            FrameAQ.BorderColor = Color.Default;
-            FrameWS.BorderColor = Color.White;
+            if (button.Equals(ButtonAQ))
+            {
+                FrameAQ.BorderColor = Color.White;
+            }
+
+            if (button.Equals(ButtonWS))
+            {
+                FrameWS.BorderColor = Color.White;
+            }
         }
     }
 }

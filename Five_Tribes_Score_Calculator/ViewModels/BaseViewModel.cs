@@ -7,13 +7,13 @@ namespace Five_Tribes_Score_Calculator.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public BaseViewModel()
-        {
-        }
-
         public void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public virtual void Initialize(object parameter) { }
+
+        public virtual void Initialize(object parameter, object secondParameter) { }
     }
 }

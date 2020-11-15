@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:Five_Tribes_Score_Calculator.Helpers"
+             x:Class="Five_Tribes_Score_Calculator.Views.PlayerConfigView"
+             BackgroundColor="Black">
+    <ContentPage.Content>
+        <!--Outer Grid-->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40*" />
+                <RowDefinition Height="65*" />
+            </Grid.RowDefinitions>
+
+            <!--Top Image-->
+            <Image Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Header2.jpg}"
+                   Aspect="Fill" Grid.Row="0" />
+            <!--Inner Grid-->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60*" />
+                    <RowDefinition Height="260*" />
+                    <RowDefinition Height="60*" />
+                    <RowDefinition Height="60*" />
+                    <RowDefinition Height="60*" />
+                    <RowDefinition Height="50*" />
+                </Grid.RowDefinitions>
+
+                <!--Player List Label-->
+                <Label Grid.Row="0"
+                       Grid.Column="1"
+                       Grid.ColumnSpan="4"
+                       Text="Player List"
+                       FontSize="Title"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Start"/>
+
+                <Frame Grid.Row="1"
+                       Grid.Column="1"
+                       Grid.ColumnSpan="4"
+                       BorderColor="White"
+                       Padding="1">
+                    <!--Player ListView-->
+                    <ListView x:Name="PlayerList" ItemsSource="{Binding Players}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <!--ListView-->
+                                    <StackLayout Orientation="Horizontal"
+                                                 Padding="10,6"
+                                                 HorizontalOptions="Fill">
+                                        <Label Text="{Binding Id, StringFormat='{0}.'}" />
+                                        <Label Text="{Binding Name}"
+                                               Margin="3,0" />
+                                        <Label Text="{Binding Gender}"
+                                               FontFamily="{StaticResource FontAwesome}"
+                                               FontAttributes="Bold"
+                                               TextColor="{Binding GenderColor}" />
+                                        <Label Text="{StaticResource Checked}"
+                                               FontFamily="{StaticResource FontAwesome}"
+                                               FontAttributes="Bold"
+                                               TextColor="Green"
+                                               IsVisible="{Binding MarkAsComplete}"
+                                               Margin="3,0" />
+                                        <Button Text="Edit"
+                                                HorizontalOptions="EndAndExpand"
+                                                WidthRequest="70"
+                                                BackgroundColor="WhiteSmoke"
+                                                TextColor="DimGray"
+                                                Command="{Binding Path=BindingContext.NavigateToEditPage, Source={x:Reference PlayerList}}"
+                                                CommandParameter="{Binding .}" />
+                                    </StackLayout>
+                                    <!--Menu Item-->
+                                    <ViewCell.ContextActions>
+                                        <MenuItem Text="Delete"
+                                                  Command="{Binding Path=BindingContext.RemovePlayerCommand, Source={x:Reference PlayerList}}"
+                                                  CommandParameter="{Binding .}"
+                                                  IsDestructive="True" />
+                                    </ViewCell.ContextActions>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Frame>
+                
+                <!--Player Name Entry-->
+                <Entry Grid.Row="2"
+                       Grid.Column="1"
+                       Grid.ColumnSpan="2"
+                       Placeholder="Enter Name"
+                       BackgroundColor="DimGray"
+                       Text="{Binding PlayerName}"/>
+
+                <!-- Gender Picker -->
+                <Picker Grid.Row="2"
+                        Grid.Column="3"
+                        Title="Gender"
+                        SelectedItem="{Binding SelectedGender}">
+                    <Picker.Items>
+                        <x:String></x:String>
+                        <x:String>Male</x:String>
+                        <x:String>Female</x:String>
+                    </Picker.Items>
+                </Picker>
+
+                <!--Add Button-->
+                <Button Grid.Row="2"
+                        Grid.Column="4"
+                        Text="Add"
+                        Command="{Binding AddPlayerCommand}" />
+
+                <!--Calculate Score Button-->
+                <Button Grid.Row="3"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="4"
+                        Text="Calculate Scores"
+                        Command="{Binding CalculateScoreCommand}" />
+
+                <!--Back Button-->
+                <Button Grid.Row="4"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="4"
+                        Text="Back"
+                        Command="{Binding NavigateBackCommand}" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

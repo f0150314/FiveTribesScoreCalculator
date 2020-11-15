@@ -12,6 +12,7 @@ namespace Five_Tribes_Score_Calculator.Droid.CustomControls
 {
     public class CustomAndroidPicker : PickerRenderer
     {
+        // Required for initialization
         public CustomAndroidPicker(Context context) : base(context)
         {
         }

@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:h="clr-namespace:Five_Tribes_Score_Calculator.Helpers"
+             x:Class="Five_Tribes_Score_Calculator.Views.ScoreSheetView"
+             BackgroundColor="Black">
+    <!--Page styles -->
+    <ContentPage.Resources>
+        <Style TargetType="Image">
+            <Setter Property="Aspect" Value="Fill" />
+        </Style>
+        <Style TargetType="Frame">
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="Padding" Value="10,3" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="BorderColor" Value="White" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <!--Top Image-->
+            <Image Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Header3.jpg}"
+                   Aspect="Fill"
+                   HeightRequest="200"/>
+
+            <!--Outer Grid-->
+            <Grid RowSpacing="0" ColumnSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40*" />
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="40*" />
+                    <RowDefinition Height="5" /> <!--Spacing between scoresheet and back button-->
+                    <RowDefinition Height="70*" />
+                    <RowDefinition Height="50*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="40*" />
+                    <ColumnDefinition Width="60*" />
+                    <ColumnDefinition Width="5" />
+                </Grid.ColumnDefinitions>
+
+                <!--Header images-->
+                <Image Source="scoresheet_header_name" Grid.Row="0" Grid.Column="1" />
+                <Image Source="scoresheet_header_coin" Grid.Row="1" Grid.Column="1" />
+                <Image Source="scoresheet_header_vizier" Grid.Row="2" Grid.Column="1" />
+                <Image Source="scoresheet_header_artisan" Grid.Row="3" Grid.Column="1" />
+                <Image Source="scoresheet_header_elder" Grid.Row="4" Grid.Column="1" />
+                <Image Source="scoresheet_header_djinn" Grid.Row="5" Grid.Column="1" />
+                <Image Source="scoresheet_header_palmtree" Grid.Row="6" Grid.Column="1" />
+                <Image Source="scoresheet_header_palace" Grid.Row="7" Grid.Column="1" />
+                <Image Source="scoresheet_header_camel" Grid.Row="8" Grid.Column="1" />
+                <Image Source="scoresheet_header_preciousitem" Grid.Row="9" Grid.Column="1" />
+                <Image Source="scoresheet_header_resource" Grid.Row="10" Grid.Column="1" />
+                <Image Source="scoresheet_header_total" Grid.Row="11" Grid.Column="1" />
+
+                <!--Collection View-->
+                <CollectionView Grid.Row="0" Grid.RowSpan="12" Grid.Column="2" ItemsSource="{Binding Players}">
+                    <!--Display items horizontally-->
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!--Border for each horizontal diplay record, padding zero is required to prevent double padding as padding has been set on the page level-->
+                            <Frame Padding="0,0">
+                                <!--Inner Grid for scores-->
+                                <Grid RowSpacing="0" ColumnSpacing="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40*" />
+                                        <RowDefinition Height="70*" />
+                                        <RowDefinition Height="70*" />
+                                        <RowDefinition Height="70*" />
+                                        <RowDefinition Height="70*" />
+                                        <RowDefinition Height="70*" />
+                                        <RowDefinition Height="70*" />
+                                        <RowDefinition Height="70*" />
+                                        <RowDefinition Height="70*" />
+                                        <RowDefinition Height="70*" />
+                                        <RowDefinition Height="70*" />
+                                        <RowDefinition Height="40*" />
+                                    </Grid.RowDefinitions>
+
+                                    <!--Cell Images-->
+                                    <Image Source="scoresheet_cell_coin" Grid.Row="1" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_vizier" Grid.Row="2" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_artisan" Grid.Row="3" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_elder" Grid.Row="4" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_djinn" Grid.Row="5" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_palmtree" Grid.Row="6" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_palace" Grid.Row="7" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_camel" Grid.Row="8" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_artisan" Grid.Row="9" WidthRequest="0" />
+                                    <Image Source="scoresheet_cell_resource" Grid.Row="10" WidthRequest="0" />
+
+                                    <!--Player Names-->
+                                    <Frame Grid.Row="0" BackgroundColor="WhiteSmoke">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{StaticResource Crown}"
+                                                   TextColor="Orange"
+                                                   IsVisible="{Binding IsWinner}"
+                                                   FontFamily="{StaticResource FontAwesome}"/>
+                                            <Label Text="{Binding Name}" />
+                                        </StackLayout>
+                                    </Frame>
+
+                                    <!--Player Scores-->
+                                    <Label Grid.Row="1" Text="{Binding Path=Scores[COINS]}" />
+                                    <Label Grid.Row="2" Text="{Binding Path=Scores[VIZIERS]}" />
+                                    <Label Grid.Row="3" Text="{Binding Path=Scores[ARTISANS]}" />
+                                    <Label Grid.Row="4" Text="{Binding Path=Scores[ELDERS]}" />
+                                    <Label Grid.Row="5" Text="{Binding Path=Scores[DJINNS]}" />
+                                    <Label Grid.Row="6" Text="{Binding Path=Scores[TREES]}" />
+                                    <Label Grid.Row="7" Text="{Binding Path=Scores[PALACES]}" />
+                                    <Label Grid.Row="8" Text="{Binding Path=Scores[CAMELS]}" />
+                                    <Label Grid.Row="9" Text="{Binding Path=Scores[ITEMS]}" />
+                                    <Label Grid.Row="10" Text="{Binding Path=Scores[RESOURCES]}" />
+
+                                    <Frame Grid.Row="11" BackgroundColor="WhiteSmoke">
+                                        <Label Text="{Binding TotalScore}" />
+                                    </Frame>
+                                </Grid>
+                            </Frame>  
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+        
+                <!--Back Button-->
+                <Button Text="Back"
+                        Command="{Binding NavigateBackCommand}"
+                        Grid.Row="13"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2" />
+            </Grid>
+        </StackLayout>        
+    </ContentPage.Content>
+</ContentPage>

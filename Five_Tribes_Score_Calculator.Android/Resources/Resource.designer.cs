@@ -8355,10 +8355,73 @@ namespace Five_Tribes_Score_Calculator.Droid
 			public const int notify_panel_notification_icon_bg = 2131165299;
 			
 			// aapt resource value: 0x7F070074
-			public const int tooltip_frame_dark = 2131165300;
+			public const int scoresheet_cell_artisan = 2131165300;
 			
 			// aapt resource value: 0x7F070075
-			public const int tooltip_frame_light = 2131165301;
+			public const int scoresheet_cell_camel = 2131165301;
+			
+			// aapt resource value: 0x7F070076
+			public const int scoresheet_cell_coin = 2131165302;
+			
+			// aapt resource value: 0x7F070077
+			public const int scoresheet_cell_djinn = 2131165303;
+			
+			// aapt resource value: 0x7F070078
+			public const int scoresheet_cell_elder = 2131165304;
+			
+			// aapt resource value: 0x7F070079
+			public const int scoresheet_cell_palace = 2131165305;
+			
+			// aapt resource value: 0x7F07007A
+			public const int scoresheet_cell_palmtree = 2131165306;
+			
+			// aapt resource value: 0x7F07007B
+			public const int scoresheet_cell_resource = 2131165307;
+			
+			// aapt resource value: 0x7F07007C
+			public const int scoresheet_cell_vizier = 2131165308;
+			
+			// aapt resource value: 0x7F07007D
+			public const int scoresheet_header_artisan = 2131165309;
+			
+			// aapt resource value: 0x7F07007E
+			public const int scoresheet_header_camel = 2131165310;
+			
+			// aapt resource value: 0x7F07007F
+			public const int scoresheet_header_coin = 2131165311;
+			
+			// aapt resource value: 0x7F070080
+			public const int scoresheet_header_djinn = 2131165312;
+			
+			// aapt resource value: 0x7F070081
+			public const int scoresheet_header_elder = 2131165313;
+			
+			// aapt resource value: 0x7F070082
+			public const int scoresheet_header_name = 2131165314;
+			
+			// aapt resource value: 0x7F070083
+			public const int scoresheet_header_palace = 2131165315;
+			
+			// aapt resource value: 0x7F070084
+			public const int scoresheet_header_palmtree = 2131165316;
+			
+			// aapt resource value: 0x7F070085
+			public const int scoresheet_header_preciousitem = 2131165317;
+			
+			// aapt resource value: 0x7F070086
+			public const int scoresheet_header_resource = 2131165318;
+			
+			// aapt resource value: 0x7F070087
+			public const int scoresheet_header_total = 2131165319;
+			
+			// aapt resource value: 0x7F070088
+			public const int scoresheet_header_vizier = 2131165320;
+			
+			// aapt resource value: 0x7F070089
+			public const int tooltip_frame_dark = 2131165321;
+			
+			// aapt resource value: 0x7F07008A
+			public const int tooltip_frame_light = 2131165322;
 			
 			static Drawable()
 			{

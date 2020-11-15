@@ -2,23 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:h="clr-namespace:Five_Tribes_Score_Calculator.Helpers"
-             xmlns:v="clr-namespace:Five_Tribes_Score_Calculator.ViewModels"
-             xmlns:local="clr-namespace:Five_Tribes_Score_Calculator"
              x:Class="Five_Tribes_Score_Calculator.MainPage"
              BackgroundColor="Black">
-    <!--Xmal model binding-->
-    <ContentPage.BindingContext>
-        <v:MainPageViewModel />
-    </ContentPage.BindingContext>
-
     <!--Page Styles-->
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style TargetType="Label">
-                <Setter Property="TextColor" Value="White" />
-                <Setter Property="HorizontalTextAlignment" Value="Center" />
-                <Setter Property="FontSize" Value="15" />
-            </Style>
             <Style TargetType="Frame" x:Key="LabelFrame">
                 <Setter Property="Padding" Value="5" />
                 <Setter Property="BackgroundColor" Value="Transparent" />
@@ -26,7 +14,7 @@
             </Style>
             <Style TargetType="ImageButton">
                 <Setter Property="Aspect" Value="Fill" />
-                <Setter Property="Command" Value="{Binding SelectGameType}" />
+                <Setter Property="Command" Value="{Binding SelectGameCommand}" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -40,10 +28,10 @@
 
             <!--Top Image-->
             <Image Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Header.jpg}"
-                   VerticalOptions="FillAndExpand" Aspect="Fill" Grid.Row="0" Margin="0,0,0,10"/>
+                   Aspect="Fill" Grid.Row="0" Margin="0,0,0,10"/>
 
             <!--Inner Grid-->
-            <Grid Grid.Row="1">
+            <Grid x:Name="GridInner" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="*" />
@@ -61,21 +49,21 @@
 
                 <!--Base Game-->
                 <ImageButton x:Name="ButtonFT" Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.FT_Image.jpg}"
-                       Grid.Column="1" Grid.Row="0" Clicked="ButtonFT_Clicked" />
+                       Grid.Column="1" Grid.Row="0" Clicked="Button_Clicked" CommandParameter="{x:Static h:GameTypes.FT}" />
                 <Frame x:Name="FrameFT" Grid.Column="1" Grid.Row="1" Style="{StaticResource LabelFrame}">
                     <Label Text="Five Tribes Base Game" />
                 </Frame>
 
                 <!--Artisans of Naqala-->
                 <ImageButton x:Name="ButtonAQ" Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.AQ_Image.jpg}"
-                       Grid.Column="2" Grid.Row="0" Clicked="ButtonAQ_Clicked" />
+                       Grid.Column="2" Grid.Row="0" Clicked="Button_Clicked" CommandParameter="{x:Static h:GameTypes.AQ}" />
                 <Frame x:Name="FrameAQ" Grid.Column="2" Grid.Row="1" Style="{StaticResource LabelFrame}">
                     <Label Text="The Artisans Of Naqala" />
                 </Frame>              
 
                 <!--Whims of Sultan-->
                 <ImageButton x:Name="ButtonWS" Source="{h:ImageResource Five_Tribes_Score_Calculator.Resources.WS_Image.jpg}"
-                       Grid.Column="3" Grid.Row="0" Clicked="ButtonWS_Clicked" />
+                       Grid.Column="3" Grid.Row="0" Clicked="Button_Clicked" CommandParameter="{x:Static h:GameTypes.WS}" />
                 <Frame x:Name="FrameWS" Grid.Column="3" Grid.Row="1" Style="{StaticResource LabelFrame}">
                     <Label Text="Whims Of The Sultan" />
                 </Frame>                
@@ -84,29 +72,17 @@
                 <Picker Grid.Column="1"
                         Grid.ColumnSpan="3"
                         Grid.Row="2"
-                        Margin="0,0,0,10"
                         Title="Number Of Players"
-                        TextColor="LightGray"
-                        FontAttributes="Bold">
-                    <Picker.Items>
-                        <x:String></x:String>
-                        <x:String>2 Players</x:String>
-                        <x:String>3 Players</x:String>
-                        <x:String>4 Players</x:String>
-                        <x:String>5 Players</x:String>
-                    </Picker.Items>
+                        ItemsSource="{Binding PlayerCountList}"
+                        SelectedItem="{Binding SelectedPlayerCount}">
                 </Picker>
 
                 <!--Submit button-->
-                <Button x:Name="ButtonSubmit"
-                        BackgroundColor="White"
-                        Grid.Column="1"
+                <Button Grid.Column="1"
                         Grid.Row="3"
                         Grid.ColumnSpan="3"
                         Text="{Binding GameName}"
-                        TextColor="DarkGray"
-                        FontAttributes="Bold"
-                        FontSize="Medium" />
+                        Command="{Binding SubmitSettingCommand}" />
             </Grid>      
         </Grid>          
     </ContentPage.Content>   
