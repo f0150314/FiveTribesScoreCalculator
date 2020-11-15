@@ -93,12 +93,21 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         }
 
         /// <summary>
-        /// Navigate to previous page
+        /// Disable button if return false
         /// </summary>
         /// <returns></returns>
-        private async Task NavigateBackAsync()
+        private bool CanCalculateScore()
         {
-            await navigationServices.GobackAsync();
+            // If player count doesn't equal to predefined number of players or there are players that have not been marked as complete.
+            // The ?. is to prevent null reference of game model when initialiing the CanExecute method.
+            if (Players.Count != gameModel?.PlayerCount || Players.Any(p => p.MarkAsComplete != true))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         /// <summary>
@@ -160,27 +169,6 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         }
 
         /// <summary>
-        /// Redirect the user to enter score page.
-        /// </summary>
-        /// <param name="player"></param>
-        /// <returns></returns>
-        private async Task NavigateToEditScorePageAsync(PlayerModel player)
-        {
-            if (player != null && gameModel != null)
-            {
-                // If it is base game, set scores of artisans and items to 0.
-                // The preprocess was done because dictionary value shown in the entry cannot be updated by OnNotifiyPropertyChanged event.
-                if (player.Scores != null && gameModel.GameType.Equals(GameTypes.FT))
-                {
-                    player.Scores["ARTISANS"] = "0" ;
-                    player.Scores["ITEMS"] = "0";
-                }
-
-                await navigationServices.NavigateToAsync(ViewNames.EDIT_SCORES_PAGE, player, gameModel);
-            }
-        }
-
-        /// <summary>
         /// Remove the selected player
         /// </summary>
         /// <param name="player"></param>
@@ -194,6 +182,27 @@ namespace Five_Tribes_Score_Calculator.ViewModels
 
             // Update CanExecute state
             ((Command)CalculateScoreCommand).ChangeCanExecute();
+        }
+
+        /// <summary>
+        /// Redirect the user to enter score page.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
+        private async Task NavigateToEditScorePageAsync(PlayerModel player)
+        {
+            if (player != null && gameModel != null)
+            {
+                // If it is base game, set scores of artisans and items to 0.
+                // The preprocess was done because dictionary value shown in the entry cannot be updated by OnNotifiyPropertyChanged event.
+                if (player.Scores != null && gameModel.GameType.Equals(GameTypes.FT))
+                {
+                    player.Scores["ARTISANS"] = "0";
+                    player.Scores["ITEMS"] = "0";
+                }
+
+                await navigationServices.NavigateToAsync(ViewNames.EDIT_SCORES_PAGE, player, gameModel);
+            }
         }
 
         /// <summary>
@@ -218,21 +227,12 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         }
 
         /// <summary>
-        /// Disable button if return false
+        /// Navigate to previous page
         /// </summary>
         /// <returns></returns>
-        private bool CanCalculateScore()
+        private async Task NavigateBackAsync()
         {
-            // If player count doesn't equal to predefined number of players or there are players that have not been marked as complete.
-            // The ?. is to prevent null reference of game model when initialiing the CanExecute method.
-            if (Players.Count != gameModel?.PlayerCount || Players.Any(p => p.MarkAsComplete != true))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            await navigationServices.GobackAsync();
         }
 
         /// <summary>

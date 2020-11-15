@@ -54,68 +54,6 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         }
 
         /// <summary>
-        /// Store all scores and navigate to previous page.
-        /// </summary>
-        /// <returns></returns>
-        private async Task ConfirmEditAsync()
-        {
-            if (IsValueValidated())
-            {
-                // Reformat values before saving it (in case there are some values with leading zeros)
-                Scores.Where(s => s.Value.Contains("0")).Select(s => s.Key).ToList().ForEach(k => Scores[k] = Convert.ToInt32(Scores[k]).ToString());
-
-                // Update empty scores to 0
-                Scores.Where(s => string.IsNullOrWhiteSpace(s.Value)).Select(s => s.Key).ToList().ForEach(k => Scores[k] = "0");
-
-                // Record scores against the player.
-                Player.Scores = Scores;
-
-                // Mark this user as complete.
-                Player.MarkAsComplete = true;
-
-                // Clear entries
-                ClearScrores();
-
-                await navigationServices.GobackAsync();
-            }
-            else
-            {
-                // Show mandatory fields must be entered message.
-                await dialogServices.ShowErrorAsync(Scores, IsFieldEnable);
-            }
-        }
-
-        /// <summary>
-        /// Return true or false to determine if scores contain decimal point
-        /// </summary>
-        /// <returns></returns>
-        private bool IsValueValidated()
-        {
-            if (Scores["COINS"].Contains('.') || Scores["VIZIERS"].Contains('.') || Scores["ELDERS"].Contains('.') ||
-                Scores["DJINNS"].Contains('.') || Scores["TREES"].Contains('.') || Scores["PALACES"].Contains('.') ||
-                Scores["CAMELS"].Contains('.') || Scores["RESOURCES"].Contains('.'))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Navigate to previous page.
-        /// </summary>
-        /// <returns></returns>
-        private async Task NavigateBackAsync()
-        {
-            //Clear entries
-            ClearScrores();
-
-            await navigationServices.GobackAsync();
-        }
-
-        /// <summary>
         /// Initialize the player, scores object and enable edit score fields
         /// </summary>
         /// <param name="player"></param>
@@ -151,7 +89,69 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             // If game type is base game, disable fields.
             if (game != null)
             {
-                IsFieldEnable = !((GameModel)game).GameType.Equals(GameTypes.FT);              
+                IsFieldEnable = !((GameModel)game).GameType.Equals(GameTypes.FT);
+            }
+        }
+
+        /// <summary>
+        /// Store all scores and navigate to previous page.
+        /// </summary>
+        /// <returns></returns>
+        private async Task ConfirmEditAsync()
+        {
+            if (IsValueValidated())
+            {
+                // Reformat values before saving it (in case there are some values with leading zeros)
+                Scores.Where(s => s.Value.Contains("0")).Select(s => s.Key).ToList().ForEach(k => Scores[k] = Convert.ToInt32(Scores[k]).ToString());
+
+                // Update empty scores to 0
+                Scores.Where(s => string.IsNullOrWhiteSpace(s.Value)).Select(s => s.Key).ToList().ForEach(k => Scores[k] = "0");
+
+                // Record scores against the player.
+                Player.Scores = Scores;
+
+                // Mark this user as complete.
+                Player.MarkAsComplete = true;
+
+                // Clear entries
+                ClearScrores();
+
+                await navigationServices.GobackAsync();
+            }
+            else
+            {
+                // Show mandatory fields must be entered message.
+                await dialogServices.ShowErrorAsync(Scores, IsFieldEnable);
+            }
+        }
+
+        /// <summary>
+        /// Navigate to previous page.
+        /// </summary>
+        /// <returns></returns>
+        private async Task NavigateBackAsync()
+        {
+            //Clear entries
+            ClearScrores();
+
+            await navigationServices.GobackAsync();
+        }
+
+        /// <summary>
+        /// Return true or false to determine if scores contain decimal point
+        /// </summary>
+        /// <returns></returns>
+        private bool IsValueValidated()
+        {
+            if (Scores["COINS"].Contains('.') || Scores["VIZIERS"].Contains('.') || Scores["ELDERS"].Contains('.') ||
+                Scores["DJINNS"].Contains('.') || Scores["TREES"].Contains('.') || Scores["PALACES"].Contains('.') ||
+                Scores["CAMELS"].Contains('.') || Scores["RESOURCES"].Contains('.'))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 
