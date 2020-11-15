@@ -77,28 +77,41 @@ namespace Five_Tribes_Score_Calculator.ViewModels
             CalculateScoreCommand = new Command(async () => await CalculateScoreAsync(), CanCalculateScore);
 
             // Initialize players
-            RefreshPlayerList(null);
+            RefreshPlayerList<object>(null);
 
             // Subscribe messages
             MessagingCenter.Subscribe<PlayerServices>(this, Messages.AddPlayerMessage, RefreshPlayerList);
             MessagingCenter.Subscribe<PlayerServices>(this, Messages.RemovePlayerMessage, RefreshPlayerList);
+            MessagingCenter.Subscribe<EditScoresViewModel>(this, Messages.MarkAsCompleteMessage, RefreshPlayerList);
         }
 
         /// <summary>
         /// Refresh a player list
         /// </summary>
-        private void RefreshPlayerList(PlayerServices sender)
+        private void RefreshPlayerList<T>(T sender)
         {
             Players = new ObservableCollection<PlayerModel>(playerServices.GetAllPlayers());
+
+            // Update CanExecute state
+            ((Command)CalculateScoreCommand).ChangeCanExecute();
         }
 
         /// <summary>
-        /// Navigate to previous page
+        /// Disable button if return false
         /// </summary>
         /// <returns></returns>
-        private async Task NavigateBackAsync()
+        private bool CanCalculateScore()
         {
-            await navigationServices.GobackAsync();
+            // If player count doesn't equal to predefined number of players or there are players that have not been marked as complete.
+            // The ?. is to prevent null reference of game model when initialiing the CanExecute method.
+            if (Players.Count != gameModel?.PlayerCount || Players.Any(p => p.MarkAsComplete != true))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         /// <summary>
@@ -112,7 +125,7 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                 this.gameModel = (GameModel)gameModel;
             }
 
-            // Update CanExecute state
+            // Update CanExecute state (When people change game type)
             ((Command)CalculateScoreCommand).ChangeCanExecute();
         }
 
@@ -154,9 +167,19 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                 // Show fields not entered error
                 await dialogServices.ShowErrorAsync(DialogServices.MissingFieldError, null, PlayerName, SelectedGender);
             }
+        }
 
-            // Update CanExecute state
-            ((Command)CalculateScoreCommand).ChangeCanExecute();
+        /// <summary>
+        /// Remove the selected player
+        /// </summary>
+        /// <param name="player"></param>
+        private void RemovePlayerFromList(object player)
+        {
+            if (player != null)
+            {
+                // Remove the specified player
+                playerServices.RemovePlayer(player);
+            }
         }
 
         /// <summary>
@@ -172,28 +195,12 @@ namespace Five_Tribes_Score_Calculator.ViewModels
                 // The preprocess was done because dictionary value shown in the entry cannot be updated by OnNotifiyPropertyChanged event.
                 if (player.Scores != null && gameModel.GameType.Equals(GameTypes.FT))
                 {
-                    player.Scores["ARTISANS"] = "0" ;
+                    player.Scores["ARTISANS"] = "0";
                     player.Scores["ITEMS"] = "0";
                 }
 
                 await navigationServices.NavigateToAsync(ViewNames.EDIT_SCORES_PAGE, player, gameModel);
             }
-        }
-
-        /// <summary>
-        /// Remove the selected player
-        /// </summary>
-        /// <param name="player"></param>
-        private void RemovePlayerFromList(object player)
-        {
-            if (player != null)
-            {
-                // Remove the specified player
-                playerServices.RemovePlayer(player);
-            }
-
-            // Update CanExecute state
-            ((Command)CalculateScoreCommand).ChangeCanExecute();
         }
 
         /// <summary>
@@ -203,13 +210,15 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         private async Task CalculateScoreAsync()
         {
             // Final check for game type, set score of artisans and items if is base game.
-            UpdateScoreIfBaseGame();
+            playerServices.UpdateScoreIfBaseGame(Players, gameModel);
 
-            // Show winner/winners
-            FindWinners();
+            // Find  winner/winners
+            playerServices.FindWinners(Players);
+
+            //Show winners popup
             bool showDetails = await dialogServices.ShowWinnerAsync(Players);
 
-            // If show details is clicked navigate to scoresheet page
+            // If show score sheet is clicked navigate to scoresheet page
             if (showDetails)
             {
                 // Navigate to scoresheet page
@@ -218,55 +227,12 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         }
 
         /// <summary>
-        /// Disable button if return false
+        /// Navigate to previous page
         /// </summary>
         /// <returns></returns>
-        private bool CanCalculateScore()
+        private async Task NavigateBackAsync()
         {
-            // If player count doesn't equal to predefined number of players or there are players that have not been marked as complete.
-            // The ?. is to prevent null reference of game model when initialiing the CanExecute method.
-            if (Players.Count != gameModel?.PlayerCount || Players.Any(p => p.MarkAsComplete != true))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Find winners among players
-        /// </summary>
-        /// <returns></returns>
-        private void FindWinners()
-        {
-            // Reset winners (In case they change their scores)
-            Players.ToList().ForEach(p => p.IsWinner = false);
-
-            // Get total scores
-            List<int> totalScoreList = new List<int>();
-            Players.ToList().ForEach(p => totalScoreList.Add(p.TotalScore));
-
-            // Set winners using total scores
-            Players.Where(p => p.TotalScore == totalScoreList.Max()).ToList().ForEach(p => p.IsWinner = true);
-        }
-
-        /// <summary>
-        /// Update score of artisans and precious items to zero if base game is selected.
-        /// </summary>
-        private void UpdateScoreIfBaseGame()
-        {
-            if (gameModel.GameType.Equals(GameTypes.FT))
-            {
-                foreach (var player in Players)
-                {
-                    player.Scores
-                        .Where(s => s.Key.Equals("ARTISANS") || s.Key.Equals("ITEMS"))  // Find ARTISANS and ITEMS scores
-                        .Select(s => s.Key).ToList()                                    // Get their corresponding key
-                        .ForEach(k => player.Scores[k] = "0");                          // Update scores to 0
-                }
-            }
-        }
+            await navigationServices.GobackAsync();
+        }       
     }
 }
