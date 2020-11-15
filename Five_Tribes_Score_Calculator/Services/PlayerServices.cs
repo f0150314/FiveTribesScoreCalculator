@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Five_Tribes_Score_Calculator.Models;
 using Five_Tribes_Score_Calculator.Helpers;
-using System.Linq;
 using Xamarin.Forms;
 
 namespace Five_Tribes_Score_Calculator.Services
@@ -72,6 +73,40 @@ namespace Five_Tribes_Score_Calculator.Services
 
                 // Notify the specified player is removed
                 MessagingCenter.Send(this, Messages.RemovePlayerMessage);
+            }
+        }
+
+        /// <summary>
+        /// Find winners among players
+        /// </summary>
+        /// <returns></returns>
+        public void FindWinners(ObservableCollection<PlayerModel> players)
+        {
+            // Reset winners (In case they change their scores)
+            players.ToList().ForEach(p => p.IsWinner = false);
+
+            // Get total scores
+            List<int> totalScoreList = new List<int>();
+            players.ToList().ForEach(p => totalScoreList.Add(p.TotalScore));
+
+            // Set winners using total scores
+            players.Where(p => p.TotalScore == totalScoreList.Max()).ToList().ForEach(p => p.IsWinner = true);
+        }
+
+        /// <summary>
+        /// Update score of artisans and precious items to zero if base game is selected.
+        /// </summary>
+        public void UpdateScoreIfBaseGame(ObservableCollection<PlayerModel> players, GameModel game)
+        {
+            if (game.GameType.Equals(GameTypes.FT))
+            {
+                foreach (var player in players)
+                {
+                    player.Scores
+                        .Where(s => s.Key.Equals("ARTISANS") || s.Key.Equals("ITEMS"))  // Find ARTISANS and ITEMS scores
+                        .Select(s => s.Key).ToList()                                    // Get their corresponding key
+                        .ForEach(k => player.Scores[k] = "0");                          // Update scores to 0
+                }
             }
         }
     }

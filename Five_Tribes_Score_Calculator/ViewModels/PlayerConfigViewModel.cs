@@ -212,13 +212,15 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         private async Task CalculateScoreAsync()
         {
             // Final check for game type, set score of artisans and items if is base game.
-            UpdateScoreIfBaseGame();
+            playerServices.UpdateScoreIfBaseGame(Players, gameModel);
 
-            // Show winner/winners
-            FindWinners();
+            // Find  winner/winners
+            playerServices.FindWinners(Players);
+
+            //Show winners popup
             bool showDetails = await dialogServices.ShowWinnerAsync(Players);
 
-            // If show details is clicked navigate to scoresheet page
+            // If show score sheet is clicked navigate to scoresheet page
             if (showDetails)
             {
                 // Navigate to scoresheet page
@@ -233,40 +235,6 @@ namespace Five_Tribes_Score_Calculator.ViewModels
         private async Task NavigateBackAsync()
         {
             await navigationServices.GobackAsync();
-        }
-
-        /// <summary>
-        /// Find winners among players
-        /// </summary>
-        /// <returns></returns>
-        private void FindWinners()
-        {
-            // Reset winners (In case they change their scores)
-            Players.ToList().ForEach(p => p.IsWinner = false);
-
-            // Get total scores
-            List<int> totalScoreList = new List<int>();
-            Players.ToList().ForEach(p => totalScoreList.Add(p.TotalScore));
-
-            // Set winners using total scores
-            Players.Where(p => p.TotalScore == totalScoreList.Max()).ToList().ForEach(p => p.IsWinner = true);
-        }
-
-        /// <summary>
-        /// Update score of artisans and precious items to zero if base game is selected.
-        /// </summary>
-        private void UpdateScoreIfBaseGame()
-        {
-            if (gameModel.GameType.Equals(GameTypes.FT))
-            {
-                foreach (var player in Players)
-                {
-                    player.Scores
-                        .Where(s => s.Key.Equals("ARTISANS") || s.Key.Equals("ITEMS"))  // Find ARTISANS and ITEMS scores
-                        .Select(s => s.Key).ToList()                                    // Get their corresponding key
-                        .ForEach(k => player.Scores[k] = "0");                          // Update scores to 0
-                }
-            }
-        }
+        }       
     }
 }
